@@ -4,7 +4,7 @@ import mathfilters
 import D_A_T.API_FUNCS.APIMain as api_automation
 import pytz
 from numpy import ma
-import D_A_T.populate_from_csv as pop
+import D_A_T.UDI.read_smx_sheet.populate_from_csv as pop
 from django.core.mail import send_mail
 import mysql
 from django.utils.timezone import now
@@ -37,9 +37,9 @@ import D_A_T.test_cases_session as tcs
 import D_A_T.data_quality_sessions as dqs
 import D_A_T.stats_sessions as sts
 import threading
-import D_A_T.UDi_funcs as udi_retrieve
-import D_A_T.UDI_class as udi_class
-import D_A_T.generate_scripts as gs
+import D_A_T.UDI.read_smx_sheet.UDi_funcs as udi_retrieve
+import D_A_T.UDI.read_smx_sheet.UDI_class as udi_class
+import D_A_T.UDI.read_smx_sheet.generate_scripts as gs
 
 
 dbHost = settings.DATABASES['default']['HOST']
