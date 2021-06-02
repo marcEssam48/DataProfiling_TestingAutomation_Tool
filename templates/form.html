@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<form method="post" class="well well-lg" style="width: 100%;" action="{% url 'file' %} ">
+    {% csrf_token %}
+
+     <div class="sparkline8-graph" style="margin-bottom:3%;">
+        <br>
+         <div>
+        <strong style="color:#ff6600;font-size:20px;margin-bottom:3%;">
+            Read From CSV File
+        </strong>
+         </div>
+
+<br>
+         <label for="file">Enter file path:</label><br>
+<br>
+            <input class="form-control" type="text"  id="file" name="CSV_FILE" /><br>
+             <br>
+            <input  type="submit" value="Submit" class="btn btn-success" style="background-color: #FF6600" />
+
+     </div>
+</form>
+{%  endblock %}

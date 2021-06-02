@@ -1,0 +1,1 @@
+select count(*) AS total_rows from db.table

@@ -1,0 +1,32 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:eng="http://teradata.com/rta/engagementPlatform">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <eng:serviceInquiryRequest>
+         <eng:G2GHeader>
+            <eng:correlationId>APIsAutomationTesting</eng:correlationId>
+            <eng:originatingChannel>?</eng:originatingChannel>
+            <eng:channelRequestId>?</eng:channelRequestId>
+            <eng:originatingUserType>?</eng:originatingUserType>
+            <eng:originatingUserIdentifier>?</eng:originatingUserIdentifier>
+            <eng:serviceSlug>ServiceSlug_Value</eng:serviceSlug>
+         </eng:G2GHeader>
+         <eng:serviceID>TamweenEntitlement</eng:serviceID>
+         <eng:clientID>Supply</eng:clientID>
+         <eng:parameters>
+            <!--1 or more repetitions:-->
+            <eng:parameter>
+               <eng:key>NATIONALID</eng:key>
+               <eng:value>NATIONALID_Value</eng:value>
+            </eng:parameter>
+            <eng:parameter>
+               <eng:key>ServiceSlug</eng:key>
+               <eng:value>ServiceSlug_Value</eng:value>
+            </eng:parameter>
+            <eng:parameter>
+               <eng:key>Governorate_Code</eng:key>
+               <eng:value>Governorate_Code_Value</eng:value>
+            </eng:parameter>
+         </eng:parameters>
+      </eng:serviceInquiryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

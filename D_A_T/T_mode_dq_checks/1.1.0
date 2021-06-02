@@ -1,0 +1,11 @@
+SELECT (
+SEL
+CAST(COUNT(db.table.column)  AS DECIMAL(18,4))
+FROM db.table
+INNER JOIN GPROD1T_STG.CSO_PERSON
+ON cast(trim(GPROD1T_STG.CSO_PERSON.NATIONAL_ID) as VARCHAR(18)) = cast(trim(db.table.column) as VARCHAR(18))
+)
+/
+(SEL CAST (COUNT(db.table.column) AS DECIMAL(18,4))
+FROM db.table
+) * 100 as "db.table.column"

@@ -1,0 +1,1 @@
+select concat(count(distinct column) , ' out of ', count(*)) as "column" from db.table

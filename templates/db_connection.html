@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+<script>
+    function check_connection_name(){
+        var str = document.getElementById("connectionName").value
+        var current_name = str.trim()
+        var connections = {{ connection_names|safe }};
+        if(connections.length == 0)
+        {
+            document.getElementById("connectForm").action = "{% url 'databases' %}";
+            return true;
+        }
+        for(let i =0; i< connections.length; i++){
+            if(current_name == connections[i])
+            {
+                alert('Connection name already exists');
+                return false;
+            }
+            else{
+                document.getElementById("connectForm").action = "{% url 'databases' %}";
+                return true;
+            }
+        }
+
+    }
+</script>
+
+<form id="connectForm" class="well well-lg" style="width: 80%;margin-left: 10%;"  method="post" onsubmit="return check_connection_name();">
+{%  csrf_token %}
+    <div class="form-group" style="color: #FF6600;font-size: 20px;text-align: center;margin-bottom: 3%">
+        <strong>
+            DB Connection
+        </strong>
+
+    </div>
+
+
+  <div class="form-group row" style="margin-bottom: 3%">
+    <label for="staticEmail" class="col-sm-2 col-form-label" style="color: #FF6600">Database Type</label>
+    <div class="col-sm-10">
+      <select class="form-control" name="db_type">
+          <option value="1">MySQL</option>
+          <option value="2">Teradata</option>
+          <option value="3">Oracle</option>
+          <option value="4">SQL SERVER</option>
+          <option value="5">PostgreSQL</option>
+      </select>
+    </div>
+  </div>
+
+   <div class="form-group row" style="margin-bottom: 3%">
+    <label for="inputtext" class="col-sm-2 col-form-label" style="color: #FF6600">IP Address</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputPassword" placeholder="IP Address" name="ip" required>
+    </div>
+  </div>
+
+   <div class="form-group row" style="margin-bottom: 3%">
+    <label for="inputtext" class="col-sm-2 col-form-label" style="color: #FF6600">Username</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputPassword" placeholder="Usernname" name="username" required>
+    </div>
+  </div>
+
+  <div class="form-group row" style="margin-bottom: 3%">
+    <label for="inputPassword" class="col-sm-2 col-form-label" style="color: #FF6600">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+    </div>
+  </div>
+
+    <div class="form-group row" style="margin-bottom: 3%">
+    <label for="connectionName" class="col-sm-2 col-form-label" style="color: #FF6600">Connection Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="connectionName" placeholder="Connection Name" name="connectionName" required>
+    </div>
+  </div>
+
+ <div class="form-group row" style="text-align: center;margin-bottom: 3%" >
+
+     <input type="submit"  value="Connect" class="btn btn-success" style="background-color: #FF6600">
+ </div>
+    <input type="checkbox" id="save" name="save" value ="1" onclick="change_value()">
+    <label for="save"> Save connection</label>
+
+</form>
+<br>
+
+
+{% endblock %}
+
+<script>
+    function change_value(){
+      document.getElementById("save").value = "1"
+    }
+</script>

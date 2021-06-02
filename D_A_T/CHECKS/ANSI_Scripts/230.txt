@@ -1,0 +1,9 @@
+SELECT "true" from INFORMATION_SCHEMA.COLUMNS
+where table_schema = 'db' and
+table_name = 'db.tableA' and
+COLUMN_NAME = "db.tableA.FK" and
+Data_Type =
+(SELECT DATA_TYPE from INFORMATION_SCHEMA.COLUMNS
+where table_schema = 'db' and
+table_name = 'db.tableB' and
+COLUMN_NAME = "db.tableB.FK")

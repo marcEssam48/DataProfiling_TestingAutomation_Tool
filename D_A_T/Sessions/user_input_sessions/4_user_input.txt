@@ -1,0 +1,4 @@
+db_type : 2
+ip : 10.10.1.181
+username : dbc
+password : dbc

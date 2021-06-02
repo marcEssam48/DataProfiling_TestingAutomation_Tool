@@ -1,0 +1,1 @@
+select concat((count(DISTINCT table.column) / count(table.column))*100,'%') as " db.table.column " from db.table

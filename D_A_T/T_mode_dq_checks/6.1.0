@@ -1,0 +1,6 @@
+SEL COUNT( cast(db.table.column as varchar(18)))
+/ cast(COUNT(CASE WHEN CSO_PERSON.NATIONAL_ID IS NULL THEN 0 ELSE 1 END) as varchar(18))*100
+as "db.table.column"
+FROM db.table
+LEFT JOIN GPROD1T_STG.CSO_PERSON
+ON cast(trim(CSO_PERSON.NATIONAL_ID) as bigint) = cast(trim(db.table.column) as bigint)

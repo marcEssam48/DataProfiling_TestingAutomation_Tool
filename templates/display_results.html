@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST" style="text-align:center">
+            {% csrf_token %}
+            <!-- Data table area Start-->
+            <div class="admin-dashone-data-table-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div cl ass="col-lg-12">
+                            <div class="sparkline8-list shadow-reset">
+                               <div class="sparkline8-hd">
+                                    <div class="main-sparkline8-hd">
+                                        <h1>Results</h1>
+                                        <div class="sparkline8-outline-icon">
+                                            <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
+                                            <span><i class="fa fa-wrench"></i></span>
+                                            <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+                                        <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead >
+                                                <tr style="text-align:center">
+                                                    <th data-field="date" data-editable="false">Execution date</th>
+                                                    <th data-field="Rbatches" data-editable="false">Running batches</th>
+                                                    <th data-field="Tbatches" data-editable="false">Total batches</th>
+                                                    <th data-field="check_name" data-editable="false">Check name</th>
+                                                    <th data-field="table_name" data-editable="false">Table name</th>
+                                                    <th style="text-align:center"> Result</th>
+                                                    <th data-field="status" data-editable="false">Status</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for row in result %}
+                                                  <tr>
+                                                      <td>{{row.0}}</td>
+                                                      <td>{{row.1}}</td>
+                                                      <td>{{row.2}}</td>
+                                                      <td>{{row.3}}</td>
+                                                      <td>{{row.4}}</td>
+                                                      <td>
+                                                          {% for element in row.5 %}
+                                                          {{element}}
+                                                          <br>
+                                                      {% endfor %}
+                                                </td>
+                                                      <td>{{ row.6 }}</td>
+
+
+                                                 </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Data table area End-->
+
+</form>
+
+{% endblock %}

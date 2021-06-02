@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    function toggle_checkboxes(check_all){
+        checkboxes = document.getElementsByName('check');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = check_all.checked;
+          }
+    }
+    function uncheck_checkall(){
+        checkboxes = document.getElementsByName('check');
+        checkall = document.getElementsByName('checkall');
+        for(var i=1, n=checkboxes.length;i<n;i++) {
+            for(var j=0, m=checkall.length;j<m;j++){
+                checkall[j].checked = false;
+            }
+        }
+    }
+
+</script>
+
+<form method="POST" action= "{% url 'display_results' %}">
+
+            {% csrf_token %}
+    <input type="hidden" name="sel_values" value="{{ table_list }}" id="tables">
+    <input type="hidden" name="batch_ids" value="{{ batch_ids }}" id="">
+
+            <!-- Data table area Start-->
+            <div class="admin-dashone-data-table-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div cl ass="col-lg-12">
+                            <div class="sparkline8-list shadow-reset">
+                               <div class="sparkline8-hd">
+                                    <div class="main-sparkline8-hd">
+                                        <h1>Select Checks</h1>
+                                        <div class="sparkline8-outline-icon">
+                                            <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
+                                            <span><i class="fa fa-wrench"></i></span>
+                                            <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+                                        <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th><input type="checkbox" name="checkall" value ="0" onchange="toggle_checkboxes(this)"/></th>
+
+                                                    <th data-field="category" data-editable="false">Category</th>
+                                                    <th data-field="name" data-editable="false">Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox" name="check" value="1" onchange="uncheck_checkall()"/></td>
+                                                    <td>Across Tables</td>
+                                                    <td>Referential Integrity</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" name="check" value="4" onchange="uncheck_checkall()"/></td>
+                                                    <td>Table</td>
+                                                    <td>Foreign key data type compatibility</td>
+                                                </tr>
+                                                  <!--<tr>-->
+                                                    <!--<td><input type="checkbox" name="check" value="8" onchange="uncheck_checkall()"/></td>-->
+                                                    <!--<td>Column</td>-->
+                                                    <!--<td>Date validation</td>-->
+                                                <!--</tr>-->
+                                                 <tr>
+                                                    <td><input type="checkbox" name="check" value="9" onchange="uncheck_checkall()"/></td>
+                                                    <td>Column</td>
+                                                    <td>PK validation</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr>
+                                    <!-- Next Button -->
+                                       <div class="form-group row" style="text-align: center;margin-bottom: 3%" >
+                                           <input name="next_button" type="submit"  value="Next" class="btn btn-success" style="background-color: #FF6600">
+                                              </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Data table area End-->
+
+</form>
+<script>
+
+<!--        alert(document.getElementById("tables").value);-->
+</script>
+
+{% endblock %}

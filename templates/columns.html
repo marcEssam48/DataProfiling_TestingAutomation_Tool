@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+    <script>
+    function toggle_checkboxes(check_all){
+        checkboxes = document.getElementsByName('cols');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = check_all.checked;
+          }
+    }
+    function uncheck_checkall(){
+        checkboxes = document.getElementsByName('cols');
+        checkall = document.getElementsByName('checkall');
+        for(var i=1, n=checkboxes.length;i<n;i++) {
+            for(var j=0, m=checkall.length;j<m;j++){
+                checkall[j].checked = false;
+            }
+        }
+    }
+</script>
+<form class="well well-lg" style="width: 100%;"  method="post" action="{% url 'DQ_checks' %}">
+{%  csrf_token %}
+ <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+
+                                        <table id="table" data-toggle="table" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="state" data-checkbox=""><input type="checkbox" name="checkall" value ="0" onchange="toggle_checkboxes(this)"/></th>
+                                                    <th data-field="TABLE">TABLE</th>
+                                                    <th data-field="COLUMN" >COLUMN</th>
+                                                    <th data-field="DATA_TYPE" >DATA_TYPE</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% with number_comment=1%}
+                                            {% for row in  data%}
+
+
+                                                <tr>
+
+                                                    <td><input name="cols" type="checkbox" value="{{ row.0 }},{{row.1}},{{row.2}}" onchange="uncheck_checkall()"></td>
+                                                    <td class="tb">{{ row.1 }}   </td>
+                                                    <td class="column_name">{{ row.2 }}   </td>
+                                                    <td class="column_type">{{ row.3 }}   </td>
+
+                                                </tr>
+
+                                            {% endfor %}
+                                            {%  endwith %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+<div style="text-align: center">
+
+<input type="submit" class="btn btn-success" value="Go to checks" style="background-color: #FF6600" onclick="goto_checks()">
+</div>
+
+
+</form>
+<br>
+<br>
+
+{% endblock %}
+
+<script>
+
+//      function goto_checks(){
+// $('form').attr('action',"{% url 'DQ_checks' %}");
+// }
+</script>

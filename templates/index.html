@@ -1,0 +1,765 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+/* The side navigation menu */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 78%;
+  background-color: #4c5152;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.01s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.05s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn .openbtn {
+  position: absolute;
+  top: 0;
+  right: 10%;
+  font-size: 36px;
+  margin-left: 15%;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-right 0.05s;
+
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.card-counter{
+    box-shadow: 2px 2px 10px #DADADA;
+    margin: 5px;
+    padding: 20px 10px;
+    background-color: #fff;
+    height: 100px;
+    border-radius: 5px;
+    transition: .3s linear all;
+  }
+
+  .card-counter:hover{
+    box-shadow: 4px 4px 20px #DADADA;
+    transition: .3s linear all;
+  }
+
+  .card-counter.primary{
+    background-color: #007bff;
+    color: #FFF;
+  }
+
+  .card-counter.danger{
+    background-color: #ef5350;
+    color: #FFF;
+  }
+
+  .card-counter.success{
+    background-color: #66bb6a;
+    color: #FFF;
+  }
+
+  .card-counter.info{
+    background-color: #26c6da;
+    color: #FFF;
+  }
+
+  .card-counter i{
+    font-size: 5em;
+    opacity: 0.2;
+  }
+
+  .card-counter .count-numbers{
+    position: absolute;
+    right: 35px;
+    top: 20px;
+    font-size: 32px;
+    display: block;
+  }
+
+  .card-counter .count-name{
+    position: absolute;
+    right: 35px;
+    top: 65px;
+    font-style: italic;
+    text-transform: capitalize;
+    opacity: 0.5;
+    display: block;
+    font-size: 18px;
+  }
+
+
+* { box-sizing:border-box; }
+
+
+
+#create, textarea  {
+  float:left;
+  padding:25px 25px 40px;
+  margin:0 20px 20px 0;
+  width:250px;
+  height:250px;
+}
+
+
+
+
+
+textarea {
+  font:14px;
+  line-height:1.5;
+  border:0;
+  border-radius:3px;
+  background: linear-gradient(#F9EFAF, #F7E98D);
+  box-shadow:0 4px 6px rgba(0,0,0,0.1);
+  overflow:hidden;
+  transition:box-shadow 0.5s ease;
+  font-smoothing:subpixel-antialiased;
+  width:100%;
+  height:50%;
+}
+textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
+textarea:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
+
+.button {
+  border-radius: 3%;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 100%;
+  padding: 2%;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 0.75%;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -5%;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 20%;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.button1 {
+  background-color: #ddd;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+  margin-left:90%;
+  margin-bottom:10px;
+
+}
+</style>
+
+ <button class="button1" onclick="openNav()">Notes</button>
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" style="margin-left:80%;" class="closebtn" onclick="closeNav()">&times;</a>
+ <div>
+    <form  method="POST" action="{% url 'save_note' %}">
+     {% csrf_token %}
+    <div style="overflow-x:hidden;" class="container-fluid">
+    <div class="sparkline8-hd" style="width: 100%">
+        <h3 style="text-align: center">Your Notes</h3>
+         <textarea required  rows="4" name="note_in" id="note_in"   style="resize: none;"></textarea>
+
+    <button  type="submit" name="saving_note" class="button" style= "background-color:#0b991b; margin-right: 50%; margin-left: 35%" value="Save">Save</button>
+    </div>
+    </div>
+    </form>
+
+
+ <form action="{% url 'edit_delete_notes' %}" method="post">
+{% csrf_token %}
+    <div style="overflow-x:hidden;" class="container-fluid">
+     <div class="sparkline8-hd" style="width: 100%">
+
+
+        {% for note in notes %}
+            <div class="well well-lg" style=" font:14px;line-height:1.5;border:0;border-radius:3px; box-shadow:0 4px 6px rgba(0,0,0,0.1);overflow:hidden;transition:box-shadow 0.5s ease;font-smoothing:subpixel-antialiased; width:100%;height:50%;">
+                <div class="row" style="text-align: right">
+                <input type="hidden" value="{{ note.1 }}">
+                <input type="button" value="Edit" class="btn btn-info" name="edit" onclick="gotedit_note({{ note.1 }})">
+                <button value="{{ note.1 }}" class="btn btn-danger" name="delete" >x</button>
+
+                 </div>
+                 <br>
+
+
+        <textarea readonly rows="4" style="resize: none;" id="{{ note.1 }}z" name="text_area{{ note.1 }}">{{ note.0 }}</textarea>
+
+            <div>
+                <button  type="submit" name="save_edit" class="button" style= "background-color:#0b991b; margin-right: 50%; margin-left: 35%" id = "{{ note.1 }}" value="{{ note.1 }}" hidden>Save</button>
+            </div>
+ {{ note.2 }}
+            </div>
+
+
+        {% endfor %}
+
+
+
+
+    </div>
+     </div>
+
+
+</form>
+    </div>
+</div>
+
+<div id="main">
+<form method="POST" id="conn_form" action="{% url 'actions' %}">
+            {% csrf_token %}
+            {% if data.0 == '1' %}
+                <!-- Data table area Start-->
+                <div name="content" class="admin-dashone-data-table-area">
+                    <div  class="container-fluid">
+                        <div class="row">
+
+                                <div class="sparkline8-list shadow-reset">
+                                   <div class="sparkline8-hd">
+                                       <h1>Saved Connections</h1>
+                                    </div>
+                                    <div class="sparkline8-graph" >
+                                        <div class="datatable-dashv1-list custom-datatable-overright">
+
+                                            <table id="table" data-toggle="table"  data-search="true">
+                                                <thead >
+                                                    <tr style="text-align:center;">
+                                                        <th>Connection name</th>
+                                                        <th >Database type</th>
+                                                        <th>IP address</th>
+                                                        <th>User name</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for row in result %}
+                                                <tr>
+                                                <td> {{row.5}} </td>
+                                                <td>{{ row.6 }}</td>
+                                                <td>{{ row.1 }}</td>
+                                                <td>{{ row.2 }}</td>
+                                                <td>
+                                                <button name="action" style="background-color: #3eb2c9;" type="submit" class="button"  value="Connect" onclick="send('{{ row.0 }},{{ row.1 }},{{ row.2 }},{{ row.3 }},{{row.4}},{{row.5}}')"><span>Connect</span></button>
+                                                <button name="action" style= "background-color: #b00707;" type="submit" class="button"  value="Delete" onclick="confirm_delete('{{ row.0 }},{{ row.1 }},{{ row.2 }},{{ row.3 }},{{row.4}},{{row.5}}')">Delete</button>
+                                                </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        <input type="hidden" id="connection_data" name="data">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Data table area End-->
+        {% endif %}
+
+</form>
+
+
+<form method="POST" action="{% url 'source_actions' %}">
+            {% csrf_token %}
+            {% if is_source.0 == '1' %}
+                <!-- Data table area Start-->
+                <div name="content" class="admin-dashone-data-table-area">
+                    <div class="container-fluid">
+                        <div class="row">
+
+                                <div class="sparkline8-list shadow-reset">
+                                   <div class="sparkline8-hd">
+                                       <h1>Saved Data Sources</h1>
+                                    </div>
+                                    <div class="sparkline8-graph" >
+                                        <div class="datatable-dashv1-list custom-datatable-overright">
+
+                                            <table data-toggle="table"  data-search="true">
+                                                <thead >
+                                                    <tr style="text-align:center;">
+                                                        <th >Source name</th>
+                                                        <th>Connection name</th>
+                                                        <th>Database</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for row in saved_sources %}
+                                                <tr>
+                                                <td>{{ row.1 }}</td>
+                                                <td>{{ row.2 }}</td>
+                                                <td>{{ row.3 }}</td>
+                                                <td>
+                                                <button name="action" style="background-color: #3eb2c9;" type="submit" class="button"  value="Connect" onclick="send_source('{{row.2}},{{row.3}},{{row.5}},{{row.6}},{{row.7}},{{row.8}},{{row.1}},{{row.4}}')"><span>Connect</span></button>
+                                                <button name="action" style= "background-color: #b00707;" type="submit" class="button"  value="Delete" onclick="send_source({{ row.0 }})">Delete</button>
+                                                <button name="action" style= "background-color: #008000" type="submit" class="button"  value="Edit" onclick="send_source('{{row.0}},{{row.1}},{{row.3}},{{row.5}},{{row.6}},{{row.7}},{{row.8}},{{row.4}}')" >Edit</button>
+                                                </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        <input type="hidden" id="saved_source_data" name="saved_source_data">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Data table area End-->
+        {% endif %}
+
+</form>
+
+<br>
+    <div name="content" class="well well-lg" >
+   <div class="container">
+    <div class="row">
+    <div class="col-md-3">
+      <div class="card-counter primary">
+        <i class="fa fa-code-fork"></i>
+        <span class="count-numbers">{{ saved_connections.0 }}</span>
+        <span class="count-name"> Saved Connections</span>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card-counter danger">
+        <i class="fa fa-ticket"></i>
+        <span class="count-numbers">{{mysql_count.0}}</span>
+        <span class="count-name">MYSQL</span>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card-counter success">
+        <i class="fa fa-database"></i>
+        <span class="count-numbers">{{ td.0 }}</span>
+        <span class="count-name">Teradata</span>
+      </div>
+    </div>
+    </div>
+        <div class="row">
+    <div class="col-md-3">
+      <div class="card-counter info">
+        <i class="fa fa-users"></i>
+        <span class="count-numbers">{{ oracle.0 }}</span>
+        <span class="count-name">Oracle</span>
+      </div>
+    </div>
+            <div class="col-md-3">
+      <div class="card-counter primary">
+        <i class="fa fa-users"></i>
+        <span class="count-numbers">{{ sql_server.0 }}</span>
+        <span class="count-name">SQL Server</span>
+      </div>
+    </div>
+            <div class="col-md-3">
+      <div class="card-counter danger">
+        <i class="fa fa-users"></i>
+        <span class="count-numbers">{{ postgres.0 }}</span>
+        <span class="count-name">PostgresSql</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+    <br>
+
+
+<form>
+    <input type="hidden" id="dict" value="{{dict}}">
+</form>
+<script src="Chart.min.js"></script>
+
+<form>
+{% csrf_token %}
+    {% if size != 0 %}
+
+ <div name="content" class="well well-lg">
+    <div class="sparkline8-list shadow-reset">
+                               <div class="sparkline8-hd">
+                                    <div class="main-sparkline8-hd">
+<h1>Statistics charts snapshots</h1>
+<br>
+    {%for x in data_length%}
+<div class='row'>
+      <div id="charts" class='col-sm-12' url-endpoint='{% url "chart_shot" %}'>
+
+        <div class='col-sm-6' >
+
+
+            <canvas id="myChart-{{x}}" width="400" height="400" ></canvas>
+            </div>
+             <div class='col-sm-6'>
+
+            <canvas id="myChart2-{{x}}" width="400" height="400"></canvas>
+        </div>
+
+
+    </div>
+</div>
+    <br>
+{% endfor %}
+</div>
+</div>
+    </div>
+</div>
+
+
+
+    {% endif %}
+ </form>
+<br>
+<br>
+
+<form>
+    <input type="hidden" id="dict_dq" value="{{dict_dq}}">
+</form>
+
+ <form>
+{% csrf_token %}
+    {% if dq_size != 0 %}
+
+ <div name="content" class="well well-lg" >
+    <div class="sparkline8-list shadow-reset">
+                               <div class="sparkline8-hd">
+                                    <div class="main-sparkline8-hd">
+        {%if source_len != 0 %}
+<h1>DQ summary charts for "{{source_name}}" source</h1>
+                          {% endif %}
+                                         {%if source_len == 0 %}
+<h1>DQ summary charts </h1>
+                          {% endif %}
+    {%for x in data_length_dq%}
+         {%if x != -1 %}
+<div class='row'>
+      <div id="charts_dq" class='col-sm-12' url-endpoint='{% url "dq_charts_shot" %}'>
+
+        <div class='col-sm-6' >
+
+
+            <canvas id="myChart_dq-{{x}}" width="400" height="400" ></canvas>
+            </div>
+             <div class='col-sm-6'>
+
+            <canvas id='myChart_dq-{{x|add:"1"}}' width="400" height="400"></canvas>
+        </div>
+
+
+    </div>
+</div>
+    <br>
+                                         {% endif %}
+{% endfor %}
+</div>
+</div>
+    </div>
+</div>
+
+
+    {% endif %}
+ </form>
+</div>
+
+<br>
+<br>
+<script>
+    function send(msg){
+         document.getElementById("connection_data").value = msg;
+    }
+    function send_source(msg){
+         document.getElementById("saved_source_data").value = msg;
+    }
+    function confirm_delete(msg){
+        if (confirm("WARNING! All associated sources will be deleted")) {
+            document.getElementById("connection_data").value = msg;
+         }
+         else{
+            document.getElementById('conn_form').action = "{% url 'home' %}"
+         }
+    }
+</script>
+<script>
+    function gotedit_note(id) {
+        clicked = id;
+
+document.getElementById(clicked).hidden = false;
+document.getElementById(clicked+"z").removeAttribute('readonly');
+
+    }
+    </script>
+<script>
+
+var dict_dq = document.getElementById("dict_dq").value;
+var dict = document.getElementById("dict").value;
+new_data = '';
+new_data_dq = '';
+
+for(var ch =0;ch<dict.length;ch++)
+    {
+        if(dict[ch] == "\'")
+        {   new_data +="\""; }
+        else
+        { new_data += dict[ch]; }
+    }
+    mydata = JSON.parse(new_data);
+
+ for(var ch_dq =0;ch_dq<dict_dq.length;ch_dq++)
+ {
+        if(dict_dq[ch_dq] == "\'")
+        {new_data_dq +="\"";}
+        else
+        { new_data_dq += dict_dq[ch_dq]; }
+ }
+ mydata_dq = JSON.parse(new_data_dq);
+
+ window.onload = function (){
+    var keys = [];
+   for(var k in mydata) {
+   keys.push(k);}
+
+
+ for(var i=0;i<mydata[keys[0]].length;i++)
+
+
+   {
+
+   table_name = keys[0];
+   col_name = keys[1];
+   null_percentage = keys[4];
+   total_rows=keys[2];
+   distinct=keys[3];
+   null_values=mydata[null_percentage][i].toString().replace("%"," ");
+   null_values_int=parseInt(null_values);
+   dis_values = mydata[distinct][i];
+   value_int = parseInt(dis_values);
+   total_values=mydata[total_rows][i];
+   total_values_int=parseInt(total_values);
+
+
+     var ctx = document.getElementById("myChart-"+i.toString());
+     ctx.height = 250;
+     var ctx2 = document.getElementById("myChart2-"+i.toString());
+     ctx2.height = 250;
+    var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        datasets: [{
+          data:[value_int ,(total_values_int-value_int)]  ,
+          backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+
+          label: 'Statistics'
+        }],
+        labels: ['Distinct' , 'Not Distinct']
+      },
+      options: {
+      maintainAspectRatio: false,
+        responsive: true,
+        title: {
+          display: true,
+           lineHeight : 2.5 ,
+           fontcolor:'#000000',
+           fontstyle:'normal',
+           fontsize:20,
+           fontFamily: "'Arial'",
+          text:["Distinct values of table"+" "+"["+mydata[table_name][i]+"]"+" "+"column"+" "+"["+mydata[col_name][i]+"]" ]
+          }
+      }
+    });
+
+    var myChart = new Chart(ctx2, {
+    type: 'pie',
+    data: {
+        datasets: [{
+          data:[null_values_int ,(100-null_values_int)],
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+
+          label: 'Statistics'
+        }],
+        labels:['Null' , 'Not null']
+      },
+      options: {
+      maintainAspectRatio: false,
+        responsive: true,
+        title: {
+          display: true,
+          text: ["Null percentage of table"+" "+"["+mydata[table_name][i]+"]"+" "+"column"+" "+"["+mydata[col_name][i]+"]" ]}
+
+      }
+    });
+
+  }
+
+  var keys_dq = [];
+   for(var k in mydata_dq)
+   {
+     keys_dq.push(k);
+   }
+
+
+  for(var i=0;i<mydata_dq[keys_dq[0]].length;i++)
+   {
+       category = keys_dq[0];
+       result = keys_dq[1];
+       result_values=mydata_dq[result][i];
+       final_result = parseInt(result_values);
+
+     var ctx_dq = document.getElementById("myChart_dq-"+i.toString());
+     ctx_dq.height = 250;
+
+     var myChart_dq = new Chart(ctx_dq, {
+         type: 'pie',
+         data:
+         {
+            datasets: [{
+              data:[final_result ,(100-final_result)]  ,
+              backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+              ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255,99,132,1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+
+              label: 'Data Quality'
+            }],
+            labels: ['Good Quality' , 'Bad Quality']
+         },
+      options: {
+      maintainAspectRatio: false,
+        responsive: true,
+        title: {
+          display: true,
+           lineHeight : 2.5 ,
+           fontcolor:'#000000',
+           fontstyle:'normal',
+           fontsize:20,
+           fontFamily: "'Arial'",
+          text:["["+mydata_dq[category][i]+"]"+" "+"percentage"]
+        }
+      }
+    });
+
+   }
+}
+
+</script>
+<script>
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "21%";
+  document.getElementById("main").style.marginRight = "15%";
+  nodes = document.getElementsByName("content");
+  for(var i=0, n=nodes.length;i<n;i++) {
+          nodes[i].style.marginRight = "15%";
+          }
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0%";
+  document.getElementById("main").style.marginRight = "0%";
+  var nodes = document.getElementsByName("content");
+  for(var i=0, n=nodes.length;i<n;i++) {
+          nodes[i].style.marginRight = "0%";
+          }
+
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+    <script>
+    function toggle_checkboxes(check_all){
+        checkboxes = document.getElementsByName('tables');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = check_all.checked;
+          }
+    }
+    function uncheck_checkall(){
+        checkboxes = document.getElementsByName('tables');
+        checkall = document.getElementsByName('checkall');
+        for(var i=1, n=checkboxes.length;i<n;i++) {
+            for(var j=0, m=checkall.length;j<m;j++){
+                checkall[j].checked = false;
+            }
+        }
+    }
+    function goto_DA(){
+$('form').attr('action',"{% url 'save_template' %}");
+}
+    function goto_DQ(){
+$('form').attr('action',"{% url 'columns_selection' %}");
+}
+
+    function toggle_textbox() {
+      var x = document.getElementById("source_name");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        document.getElementById("source").required = true;
+      } else {
+        x.style.display = "none";
+        document.getElementById("source").required = false;
+      }
+      document.getElementById("source").value = '';
+      document.getElementById("save_source").value = "1";
+    }
+</script>
+
+<!--action="{% url 'save_template' %}"-->
+<form class="well well-lg" style="width: 100%;"  method="post" >
+{%  csrf_token %}
+ <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+
+                                        <table id="table" data-toggle="table" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="state" data-checkbox=""><input type="checkbox" name="checkall" value ="0" onchange="toggle_checkboxes(this)"/></th>
+                                                    <th data-field="id">ID</th>
+                                                    <th data-field="name" >Table name</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% with number_comment=1%}
+                                            {%  for x in tables  %}
+
+
+                                                <tr>
+
+                                                    <td><input name="tables" type="checkbox" value="{{ x }}" onchange="uncheck_checkall()"></td>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ x }}</td>
+
+                                                </tr>
+
+                                            {% endfor %}
+                                            {%  endwith %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+    <br>
+    {% if save_checkbox == 1 %}
+    <div>
+    <input type="checkbox" id="save_source" name="save_source"  value ="1" onclick="toggle_textbox()">
+    <label for="save_source"> Save source</label>
+    </div>
+    {% endif %}
+    <div  id="source_name" style="display:none; font-style: italic;"><input type="text" id="source" name="source" placeholder=" Source Name"></div>
+
+<div style="text-align: center">
+<input type="submit" class="btn btn-success" value="Next" style="background-color: #FF6600" onclick="goto_DA()">
+<!--<input type="submit" class="btn btn-success" value="Data Quality" style="background-color: #FF6600" onclick="goto_DQ()">-->
+</div>
+
+
+</form>
+
+
+{% endblock %}
+

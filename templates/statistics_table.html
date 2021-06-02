@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    function toggle_checkboxes(check_all){
+        checkboxes = document.getElementsByName('check');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = check_all.checked;
+          }
+    }
+    function uncheck_checkall(){
+        checkboxes = document.getElementsByName('check');
+        checkall = document.getElementsByName('checkall');
+        for(var i=1, n=checkboxes.length;i<n;i++) {
+            for(var j=0, m=checkall.length;j<m;j++){
+                checkall[j].checked = false;
+            }
+        }
+    }
+</script>
+
+<form method="POST" action="{% url 'statistics_visualization' %}">
+            {% csrf_token %}
+    <input class="form-control" type="hidden" name="chart_dict" value="{{chart_dictionary}}">
+            <!-- Data table area Start-->
+            <div class="admin-dashone-data-table-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div cl ass="col-lg-12">
+                            <div class="sparkline8-list shadow-reset">
+                               <div class="sparkline8-hd">
+                                    <div class="main-sparkline8-hd">
+                                        <h1>Tables Statistics</h1>
+                                        <div class="sparkline8-outline-icon">
+                                            <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
+                                            <span><i class="fa fa-wrench"></i></span>
+                                            <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+                                        <table id="table" data-toggle="table"  data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="date" data-editable="false">Execution date</th>
+                                                    <th data-field="batches" data-editable="false">Batches running</th>
+                                                    <th data-field="Tbatches" data-editable="false">Total batches</th>
+                                                    <th data-field="db" data-editable="false">Database name</th>
+                                                    <th data-field="table" data-editable="false">Table name</th>
+                                                    <th data-field="col" data-editable="false">Column name</th>
+                                                    <th data-field="data_type" data-editable="false">Datatype</th>
+                                                     <th data-field="total" data-editable="false">Total records</th>
+                                                    <th data-field="distinct" data-editable="false">Distinct values</th>
+                                                    <th data-field="null_no" data-editable="false">Null values</th>
+                                                    <th data-field="null_percent" data-editable="false">Null percentage</th>
+                                                    <th data-field="min" data-editable="false">Minimum values</th>
+                                                    <th data-field="max" data-editable="false">Maximum values</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                {% for row in ui_result %}
+                                                <tr>
+                                                    {% for item in row %}
+                                                    <td class="item"> {{item}} </td>
+                                                    {% endfor %}
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+ <br>
+                                 <div style="text-align: center">
+            <input type="submit" class="btn btn-success" value="Go to charts" style="background-color: #FF6600">
+        </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Data table area End-->
+
+</form>
+
+{% endblock %}

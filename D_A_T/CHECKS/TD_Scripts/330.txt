@@ -1,0 +1,2 @@
+select (count(*)-count(nullif(cast (column as varchar(1000)),'')))
+from db.table  AS null_number

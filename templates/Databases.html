@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+<form class="well well-lg" style="width: 100%;"  method="post" action="{% url 'tables' %}">
+{%  csrf_token %}
+ <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+                                        <table id="table" data-toggle="table"  data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="state" data-checkbox=""></th>
+                                                    <th data-field="id">ID</th>
+                                                    <th data-field="name" >DataBase name</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% with number_comment=1%}
+                                            {%  for x in dbs  %}
+
+
+                                                <tr>
+
+                                                    <td><input name="dbs" type="radio" value="{{ x }}"></td>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ x }}</td>
+
+                                                </tr>
+
+                                            {% endfor %}
+                                            {%  endwith %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                     <div class="form-group row" style="text-align: center;margin-bottom: 3%" >
+     <input type="submit"  value="Choose DB" class="btn btn-success" style="background-color: #FF6600">
+ </div>
+
+
+
+
+
+</form>
+{% endblock %}

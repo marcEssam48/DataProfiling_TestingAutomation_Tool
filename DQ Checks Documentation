@@ -1,0 +1,43 @@
+We have 6 categories to achieve Data Of Quality :
+1. Accuracy & Correctness
+2. Comparability
+3. Completeness
+4. Consistency
+5. uniqueness
+6. Comformaty
+
+1. Accuracy & Correctness :
+Check  that data is accurate
+For Example :
+Mobile Number should be of 11 digits
+National ID should be of 14 digits
+
+2. Comparability :
+Checking Refrential Integrity
+For Example :
+checking that the FK in a "MASTER TABLE" really exists in a "LOOKUP TABLE"
+
+3. Completeness :
+Checking nullability across the row
+For Example :
+getting the columns that have nulls for each row
+
+4. Consistency :
+Checking the stability of every transaction table
+For Example :
+all FKs must have a unique PK
+we shouldn't have two transactions having the same key
+
+5. uniqueness :
+Making sure that all PKs are unique
+For Example:
+In Lookup tables we shouldn't have same IDs to different descriptions
+In Master tables we must have a unique Identifier
+
+6. Comformaty :
+Checking the formats of every datatype
+For Example :
+A data is entered in a date format
+phone number having dashes
+
+

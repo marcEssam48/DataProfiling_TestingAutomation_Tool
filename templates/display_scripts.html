@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form class="well well-lg" style="width:90%;margin-left:5%">
+    {% for x in scripts %}
+        {{ x }}
+        <br>
+        <br>
+    {% endfor %}
+
+
+</form>
+
+{% endblock %}

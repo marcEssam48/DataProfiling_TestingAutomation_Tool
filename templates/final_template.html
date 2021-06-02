@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+<header xmlns="">
+    <style>
+        textarea:focus, input:focus{
+    outline: none;
+}
+    </style>
+</header>
+{%  block content %}
+<form class="well well-lg" style="width: 100%;"  method="post" action="{% url 'data_filter' %}">
+{%  csrf_token %}
+ <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+
+                                        <table id="table" data-toggle="table"  data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="DATABASE" >DATABASE</th>
+                                                    <th data-field="TABLE">TABLE</th>
+                                                    <th data-field="COLUMN" >COLUMN</th>
+                                                    <th data-field="DATA_TYPE" >DATA_TYPE</th>
+                                                    <th data-field="NULLABLE" >NULLABLE</th>
+                                                    <th data-field="CONSTRAINT_TYPE"  >CONSTRAINT_TYPE</th>
+                                                    <th data-field="REFERENCE_TABLE_NAME" >REFERENCE_TABLE_NAME</th>
+                                                    <th data-field="REFERENCE_COLUMN_NAME"  >REFERENCE_COLUMN_NAME</th>
+{#                                                    <th data-field="DATAWAREHOUSE_TYPE" >DATAWAREHOUSE_TYPE</th>#}
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+
+                                            {% for row in  retrieved_table%}
+
+
+
+                                                <tr>
+
+
+
+                                                <td class="database">{{ row.0 }}   </td>
+                                                <td class="tb">{{ row.1 }}   </td>
+                                                <td class="column_name">{{ row.2 }}   </td>
+                                                <td class="column_type">{{ row.3 }}   </td>
+                                                <td class="is_nullable">{{ row.4 }}   </td>
+                                                <td class="CONSTRAINT_TYPE_">{{ row.5 }}</td>
+
+                                                <td class="REFERENCE_TABLE_NAME">{{ row.6 }}</td>
+                                                <td class="REFERENCE_COLUMN_NAME">{{ row.7 }}</td>
+
+
+                                                </tr>
+
+                                            {% endfor %}
+
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+    <br>
+    <div class="form-group row" style="text-align: center;margin-bottom: 3%" >
+        <input type="submit"  value="Next" class="btn btn-success" style="background-color: #FF6600">
+
+ </div>
+                                    </div>
+
+
+
+<input type="hidden" name="table_values" id="myText">
+<input type="hidden" id="values" value="{{ well_formed_tables }}">
+<input type="hidden" value="{{ table_list }}" name="selected">
+</form>
+
+{% endblock %}

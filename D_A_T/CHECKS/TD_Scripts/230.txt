@@ -1,0 +1,4 @@
+SELECT TOP 1 CASE WHEN TYPE(REF_TABLE.PK) LIKE TYPE(db.tableA.FK) THEN 'true'
+ELSE 'false'
+END as data_type_comptability
+FROM db.tableA ;

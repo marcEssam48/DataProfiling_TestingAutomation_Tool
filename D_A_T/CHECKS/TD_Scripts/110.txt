@@ -1,0 +1,6 @@
+SELECT db.tableA.FK, count(*) as no_of_records
+FROM db.tableA
+LEFT JOIN db.tableB
+ON db.tableA.FK = db.tableB.PK
+WHERE db.tableB.PK IS  NULL
+Group by db.tableA.FK

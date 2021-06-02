@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    function set_required(val) {
+        if (val != "")
+        {
+            document.getElementById("ch_name").required = true;
+            document.getElementById("ch_desc").required = true ;
+            // alert(val);
+        }
+    }
+    function toggle_checkboxes(check_all){
+        checkboxes = document.getElementsByName('check');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = check_all.checked;
+          }
+    }
+    function uncheck_checkall(){
+        checkboxes = document.getElementsByName('check');
+        checkall = document.getElementsByName('checkall');
+        for(var i=1, n=checkboxes.length;i<n;i++) {
+            for(var j=0, m=checkall.length;j<m;j++){
+                checkall[j].checked = false;
+            }
+        }
+    }
+    function goto_save_check(){
+$('form').attr('action',"{% url 'save_query' %}");
+}
+    function goto_run_check(){
+$('form').attr('action',"{% url 'table_of_results' %}");
+}
+function goto_user_check(){
+$('form').attr('action',"{% url 'user_query' %}");
+}
+</script>
+
+<form method="POST" >
+
+            {% csrf_token %}
+    <input type="hidden" name="sel_values" value="{{ col_list }}" id="cols">
+            <!-- Data table area Start-->
+            <div class="admin-dashone-data-table-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div cl ass="col-lg-12">
+                            <div class="sparkline8-list shadow-reset">
+                               <div class="sparkline8-hd">
+                                    <div class="main-sparkline8-hd">
+                                        <h1>Select Checks</h1>
+                                        <div class="sparkline8-outline-icon">
+                                            <span class="sparkline8-collapse-link"><i class="fa fa-chevron-up"></i></span>
+                                            <span><i class="fa fa-wrench"></i></span>
+                                            <span class="sparkline8-collapse-close"><i class="fa fa-times"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+                                        <table id="table" data-toggle="table"  data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th><input type="checkbox" name="checkall" value ="0" onchange="toggle_checkboxes(this)"/></th>
+
+                                                     <th data-field="category" data-editable="false">Category</th>
+                                                    <th data-field="name" data-editable="false">Check name</th>
+                                                    <th data-field="desc" data-editable="false">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox" name="check" value="1.1.0" onchange="uncheck_checkall()"/></td>
+                                                    <td>Accuracy & Correctness</td>
+                                                    <td>NID Correctness</td>
+                                                    <td>National ID should be of 14 digits</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" name="check" value="1.2.0" onchange="uncheck_checkall()"/></td>
+                                                    <td>Accuracy & Correctness</td>
+                                                    <td>phone number Correctness</td>
+                                                    <td>Mobile Number should be of 11 digits</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" name="check" value="3.1.0" onchange="uncheck_checkall()"/></td>
+                                                    <td>Completeness</td>
+                                                    <td>Nulls percentage in a row</td>
+                                                    <td>Getting the columns that have nulls for each row</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" name="check" value="4.1.0" onchange="uncheck_checkall()"/></td>
+                                                    <td>Consistency</td>
+                                                    <td>Transaction Table uniqueness</td>
+                                                    <td>Check if transactions have unique key</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox" name="check" value="4.2.0" onchange="uncheck_checkall()"/></td>
+                                                    <td>Consistency</td>
+                                                    <td>Percentage of correct fks</td>
+                                                    <td>all FKs must have a unique PK</td>
+                                                </tr>
+                                                 <tr>
+                                                    <td><input type="checkbox" name="check" value="5.1.0" onchange="uncheck_checkall()"/></td>
+                                                    <td>uniqueness</td>
+                                                     <td>lookups uniqueness</td>
+                                                     <td>Descriptions in lookups have unique IDs</td>
+                                                </tr>
+                                                  <tr>
+                                                    <td><input type="checkbox" name="check" value="6.1.0" onchange="uncheck_checkall()"/></td>
+                                                    <td>Comformaty</td>
+                                                    <td>NID formats</td>
+                                                      <td>National ids started by 1,2 or 3</td>
+                                                </tr>
+                                                 <tr>
+                                                    <td><input type="checkbox" name="check" value="6.2.0" onchange="uncheck_checkall()"/></td>
+                                                    <td>Comformaty</td>
+                                                     <td>Mobile formats</td>
+                                                     <td>phone number having dashes</td>
+                                                </tr>
+                                          {% for row in saved_checks %}
+                                                <tr>
+                                                <td><input type="checkbox" name="check" value="{{ row.1 }}" onchange="uncheck_checkall()"/></td>
+                                               <td>{{ row.2 }}</td>
+                                                <td>{{ row.3}}</td>
+                                               <td> {{ row.4}} </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+                                    <hr>
+                                    <!-- Next Button -->
+                                       <!--<div class="form-group row" style="text-align: center;margin-bottom: 3%" >-->
+                                             <!--<input name="next_button" type="submit"  value="Run" class="btn btn-success" style="background-color: #FF6600" onclick="goto_run_check()">-->
+                                       <!--</div>-->
+                                        <!--<input type="text" name="query" placeholder="Enter Your query"  class="form-control" >-->
+                                    <label>Enter Your query here: </label>
+                                    <textarea  name="query" placeholder="Enter Your query"  class="form-control" rows="8" onchange="set_required(this.value)"></textarea>
+                                         <hr>
+                                    <label>Check name: </label>
+                                        <input type="text" id="ch_name" name="check_name" placeholder="Enter the check name"  class="form-control" >
+                                        <hr>
+                                    <label>Description: </label>
+                                        <input type="text" id="ch_desc" name="check_description" placeholder="Enter the check description"  class="form-control" >
+                                        <hr>
+                                        <p><b>Category : </b>
+                                        <select name="category"  class="form-control">
+                                            <option value="Other">Other</option>
+                                            <option value="Accuracy & Correctness">Accuracy & Correctness </option>
+                                             <option value="Comparability">Comparability </option>
+                                             <option value="Completeness">Completeness </option>
+                                             <option value="Consistency">Consistency </option>
+                                             <option value="uniqueness">uniqueness </option>
+                                             <option value="Comformaty">Comformaty </option>
+                                        </select>
+                                  <div class="form-group row" style="text-align: center;margin-bottom: 3%" >
+                                             <input name="save" type="submit"  value="Run" onclick="goto_run_check()" class="btn btn-success" style="background-color: #FF6600">
+                                             <input name="next_button" type="submit"  value="Save " onclick="goto_save_check()" class="btn btn-success" style="background-color: #FF6600">
+                                              <input name="query" type="submit"  value="User queries " onclick="goto_user_check()" class="btn btn-success" style="background-color: #FF6600">
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Data table area End-->
+
+</form>
+
+{% endblock %}

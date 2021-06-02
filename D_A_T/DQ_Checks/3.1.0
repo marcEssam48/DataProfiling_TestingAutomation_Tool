@@ -1,0 +1,1 @@
+select avg( db.table.column is not null ) * 100 as " db.table.column " from db.table

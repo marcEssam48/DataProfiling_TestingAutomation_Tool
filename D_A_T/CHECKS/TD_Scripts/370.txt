@@ -1,0 +1,6 @@
+SELECT COALESCE(CAST(MAX(column) AS VARCHAR(50)),'Incompatible DataType')
+FROM db.table
+WHERE (TYPE(column) LIKE '%INT%'
+OR TYPE(column) LIKE '%TIME%'
+OR TYPE(column) LIKE '%INTERVAL%'
+OR TYPE(column) IN ('DECIMAL','NUMERIC','FLOAT','REAL','DOUBLE','PRECISION','PRECISION','DATE'))

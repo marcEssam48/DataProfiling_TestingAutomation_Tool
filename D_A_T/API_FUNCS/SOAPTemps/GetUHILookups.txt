@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uhi="http://teradata.com/uhi">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <uhi:GetUHILookupsRequest>
+         <uhi:GGHeader>
+            <uhi:correlationId>APIsAutomationTesting</uhi:correlationId>
+            <uhi:originatingChannel>1</uhi:originatingChannel>
+            <uhi:channelRequestId>1</uhi:channelRequestId>
+            <uhi:originatingUserType>1</uhi:originatingUserType>
+            <uhi:originatingUserIdentifier>1</uhi:originatingUserIdentifier>
+         </uhi:GGHeader>
+         <uhi:LookupType>LookupType_Value</uhi:LookupType>
+         <uhi:Parent>Parent_Value</uhi:Parent>
+      </uhi:GetUHILookupsRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

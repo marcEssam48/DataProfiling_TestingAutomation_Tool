@@ -1,0 +1,7 @@
+select concat(((sum(
+case when length(trim(db.table.column)) = 11
+THEN 1
+else 0 end
+    ) / count(column) )*100),'%') as " db.table.column "
+from db.table
+

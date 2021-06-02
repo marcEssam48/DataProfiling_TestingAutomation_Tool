@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+
+{% block content %}
+
+<form>
+    <input type="hidden" id="dict" value="{{dict}}">
+</form>
+<script src="Chart.min.js"></script>
+
+ <script>
+
+var dict = document.getElementById("dict").value;
+
+ new_data = ''
+ for(var ch =0;ch<dict.length;ch++)
+ {
+        if(dict[ch] == "\'")
+        {
+            new_data +="\"";
+        }
+        else
+        {
+            new_data += dict[ch];
+        }
+ }
+ mydata = JSON.parse(new_data);
+ window.onload = function ()
+ {
+   var keys = [];
+   for(var k in mydata)
+   {
+     keys.push(k);
+   }
+
+
+  for(var i=0;i<mydata[keys[0]].length;i++)
+   {
+       tables = keys[0];
+       columns=keys[1];
+       categories=keys[2];
+       result = keys[3];
+       result_values=mydata[result][i];
+       final_result = parseInt(result_values);
+
+     var ctx = document.getElementById("myChart-"+i.toString());
+     ctx.height = 300;
+
+     var myChart = new Chart(ctx, {
+         type: 'pie',
+         data:
+         {
+            datasets: [{
+              data:[final_result  ,(100-final_result)]  ,
+              backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+              ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255,99,132,1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+
+              label: 'Data Quality'
+            }],
+            labels: ['Good Quality' , 'Bad Quality']
+         },
+      options: {
+      maintainAspectRatio: false,
+        responsive: true,
+        title: {
+          display: true,
+           lineHeight : 2.5 ,
+           fontcolor:'#000000',
+           fontstyle:'normal',
+           fontsize:20,
+           fontFamily: "'Arial'",
+          text:["["+mydata[categories][i]+"]" + " "+"percentage of column"+" "+"["+mydata[columns][i]+"]"+" "+"in table"+" "+"["+mydata[tables][i]+"]"]
+        }
+      }
+    });
+
+   }
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<form>
+{% csrf_token %}
+
+<body style="background-color:white;">
+<div class="container-fluid">
+    <div class="sparkline8-list shadow-reset">
+                               <div class="sparkline8-hd">
+                                    <div class="main-sparkline8-hd">
+<h1>Data Quality </h1>
+    {%for x in data_length%}
+    {%if x != -1 %}
+
+<div class='row' >
+      <div id="charts" class='col-sm-12' url-endpoint='{% url "dq_charts" %}'>
+
+
+
+           <div class='col-sm-6' >
+
+            <canvas id="myChart-{{x}}" width="400" height="400" ></canvas>
+            </div>
+             <div class='col-sm-6'>
+
+
+            <canvas id='myChart-{{x|add:"1"}}' width="400" height="400"></canvas>
+        </div>
+
+
+    </div>
+</div>
+    <br>
+                                     {% endif %}
+{% endfor %}
+</div>
+</div>
+    </div>
+</div>
+<script src="http://code.jquery.com/jqoery-latest.min.js" type="text/javascript"></script>
+<script src="html2canvas.min.js" type="text/javascript"></script>
+<script>
+    function takescreenshot(){
+     var element =$
+</script>
+</body>
+    </form>
+{% endblock  %}

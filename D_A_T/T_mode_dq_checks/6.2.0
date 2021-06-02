@@ -1,0 +1,10 @@
+select concat(((sum(
+case when length(db.table.column) = 11
+AND
+substring(db.table.column,1,2) = '01'
+AND
+(substring(db.table.column,3,1) in ('0','1','2','5'))
+THEN 1
+else 0 end
+    ) / count(column) )*100),'%') as " db.table.column "
+from db.table

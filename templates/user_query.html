@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+
+.button {
+  border-radius: 3%;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 100%;
+  padding: 2%;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 0.75%;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -5%;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 20%;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+<script>
+ function goto_run_check(){
+$('form').attr('action',"{% url 'table_of_results' %}");
+}
+function send_query(msg){
+
+      var select = document.getElementById("category");
+        var length = select.options.length;
+        for (i = length - 1; i >= 0; i--) {
+            select.options[i] = null;
+        }
+   document.getElementById("saved_query_data").value = msg;
+   new_array = msg.split(",");
+   document.getElementById("query").value = new_array[0];
+   document.getElementById("check_name").value = new_array[2];
+   document.getElementById("desc").value = new_array[3];
+   document.getElementById("check_id").value = new_array[4];
+   // document.getElementById("category").value = new_array[1];
+
+   categories = ["Other" ,"Accuracy & Correctness" , "Comparability" , "Completeness" , "Consistency" , "uniqueness"  , "Comformaty" ]
+    var select = document.getElementById("category");
+    // select.options.length = categories.length;
+    var opt = document.createElement('option');
+    opt.appendChild(document.createTextNode(new_array[1]));
+    opt.value = new_array[1];
+    select.appendChild(opt);
+
+    for (index = 0; index < categories.length; index++) {
+    if(new_array[1].trim() != categories[index].trim())
+    {
+    var opt = document.createElement('option');
+    opt.appendChild(document.createTextNode(categories[index]));
+    opt.value = categories[index];
+    select.appendChild(opt);
+    }
+}
+
+
+        // alert(select.options.length);
+        // for (i = length - 1; i >= 0; i--) {
+            // select.options[i] = null;
+
+    }
+
+function read_only_to_write()
+{
+
+    document.getElementById('query').removeAttribute('readonly');
+    document.getElementById('check_name').removeAttribute('readonly');
+    document.getElementById('desc').removeAttribute('readonly');
+    document.getElementById('category').removeAttribute("disabled");
+
+
+}
+
+function toggle_checkboxes(check_all){
+        checkboxes = document.getElementsByName('query');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = check_all.checked;
+          }
+    }
+function uncheck_checkall(){
+    checkboxes = document.getElementsByName('query');
+    checkall = document.getElementsByName('checkall');
+    for(var i=1, n=checkboxes.length;i<n;i++) {
+        for(var j=0, m=checkall.length;j<m;j++){
+            checkall[j].checked = false;
+        }
+    }
+}
+
+</script>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+
+
+
+  <form method="POST" action="{% url 'rur_edit_delete_query' %}" >
+            {% csrf_token %}
+
+                <!-- Data table area Start-->
+                <div class="admin-dashone-data-table-area" style="width:100%">
+                    <div class="container-fluid">
+                        <div class="row">
+                                <div class="sparkline8-list shadow-reset">
+                                   <div class="sparkline8-hd">
+                                       <div class="main-sparkline8-hd">
+                                         <h1>Saved user queries</h1>
+                                    </div>
+                                   </div>
+                                    <div class="sparkline8-graph" >
+                                        <div class="datatable-dashv1-list custom-datatable-overright">
+
+                                            <table data-toggle="table"  data-search="true" >
+                                                <thead >
+                                                    <tr style="text-align:center;">
+                                                        <th data-field="state" data-checkbox=""><input type="checkbox" name="checkall" value ="0" onchange="toggle_checkboxes(this)"/></th>
+                                                        <th>Category name</th>
+                                                        <th>Check name</th>
+                                                        <th>Check description</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for row in result %}
+                                                <tr>
+                                                <td><input name="query" type="checkbox" value="{{ row.3 }};;{{ row.1 }}" onchange="uncheck_checkall()"></td>
+                                                <td>{{ row.2 }}</td>
+                                                <td>{{ row.3 }}</td>
+                                                 <td>{{ row.4 }}</td>
+                                                <td>
+
+                                                <button name="action"  style= "background-color: #b00707;" type="submit" class="button" value="Delete" onclick="send_query({{ row.6 }})">Delete</button>
+                                                <button type="button" style="background-color: #3eb2c9;" type="submit" class="button"  data-toggle="modal" data-target="#form_modal" onclick="send_query(' {{ row.1 }}, {{ row.2 }}, {{ row.3 }}, {{ row.4 }},  {{ row.6 }}')">Show or Edit </button>
+                                                    <!--<button name="action"  id="edit" style= "background-color: #008000" type="submit" class="button"  value="Edit"  >Edit</button>-->
+
+                                                </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+
+
+                                          <input type="hidden" id="saved_query_data" name="saved_query_data">
+                                        </div> <br>
+                                         <div class="form-group row" style="text-align: center;margin-bottom: 3%" >
+                                            <input name="action" type="submit"  value="Run" class="btn btn-success" style="background-color: #FF6600">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+  </form>
+  <!-- Trigger the modal with a button -->
+  <!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#form_modal">Open Modal</button>-->
+
+  <!-- Modal -->
+  <div class="modal fade" id="form_modal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+       <div class="modal-content">
+                                                  <span class="close">&times;</span>
+                                                <form method="post" action="{% url 'save_edited_query' %}">
+                                                    <input type="hidden" id="select_index">
+                                                    {% csrf_token %}
+
+                                                <input type="text" id = "query" name="query" placeholder="Enter Your query"  class="form-control" value="{{query}}"  readonly>
+                                                 <hr>
+                                                <input type="text" id="check_name" name="check_name" placeholder="Enter the check name"  class="form-control" value="{{check_name}}" readonly>
+                                                <hr>
+                                                <input type="text" id="desc" name="check_description" placeholder="Enter the check description"  class="form-control" value="{{check_description}}" readonly>
+                                                <hr>
+                                                <p><b>Category : </b>
+                                                <select id="category" name="category"  class="form-control" disabled>
+
+                                                    <!--<option></option>-->
+                                                    <!--<option value="Other" >Other</option>-->
+                                                    <!--<option value="Accuracy & Correctness" >Accuracy & Correctness </option>-->
+                                                     <!--<option value="Comparability">Comparability </option>-->
+                                                     <!--<option value="Completeness">Completeness </option>-->
+                                                     <!--<option value="Consistency">Consistency </option>-->
+                                                     <!--<option value="uniqueness">uniqueness </option>-->
+                                                     <!--<option value="Comformaty">Comformaty </option>-->
+                                                </select>
+                                                      <div class="form-group row" style="text-align: center;margin-bottom: 3%" >
+                                                    <button id="myButton" type="button"  onclick="read_only_to_write()" class="btn btn-info">Update</button>
+                                                   <input name="save" type="submit"  value="Save"  class="btn btn-success" style="background-color: #FF6600">
+                                                   <input id = "check_id" type="hidden"name="query_id" value="{{ query_id }}">
+                                                      </div>
+
+                                                                            </form>
+                                              </div>
+
+    </div>
+  </div>
+
+
+{% endblock %}

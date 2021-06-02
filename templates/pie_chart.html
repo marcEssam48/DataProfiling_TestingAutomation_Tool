@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<form>
+    <input type="hidden" id="dict" value="{{dict}}">
+</form>
+<script src="Chart.min.js"></script>
+
+ <script>
+
+var dict = document.getElementById("dict").value;
+
+new_data = ''
+ for(var ch =0;ch<dict.length;ch++)
+    {
+
+
+        if(dict[ch] == "\'")
+        {
+
+            new_data +="\"";
+
+
+        }
+        else {
+            new_data += dict[ch];
+        }
+
+    }
+    mydata = JSON.parse(new_data);
+
+
+
+
+
+  window.onload = function (){
+
+var keys = [];
+   for(var k in mydata) {
+   keys.push(k);
+
+   }
+
+
+ for(var i=0;i<mydata[keys[0]].length;i++)
+
+
+   {
+
+   table_name = keys[0];
+   col_name = keys[1];
+   null_percentage = keys[4];
+   total_rows=keys[2];
+   distinct=keys[3];
+   null_values=mydata[null_percentage][i].toString().replace("%"," ");
+   null_values_int=parseInt(null_values);
+   dis_values = mydata[distinct][i];
+   value_int = parseInt(dis_values);
+   total_values=mydata[total_rows][i];
+   total_values_int=parseInt(total_values);
+
+
+     var ctx = document.getElementById("myChart-"+i.toString());
+     ctx.height = 200;
+     var ctx2 = document.getElementById("myChart2-"+i.toString());
+     ctx2.height = 200;
+    var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        datasets: [{
+          data:[value_int ,(total_values_int-value_int)]  ,
+          backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+
+          label: 'Statistics'
+        }],
+        labels: ['Distinct' , 'Not Distinct']
+      },
+      options: {
+      maintainAspectRatio: false,
+        responsive: true,
+        title: {
+          display: true,
+           lineHeight : 2.5 ,
+           fontcolor:'#000000',
+           fontstyle:'normal',
+           fontsize:20,
+           fontFamily: "'Arial'",
+          text:["Distinct values of table"+" "+"["+mydata[table_name][i]+"]"+" "+"column"+" "+"["+mydata[col_name][i]+"]" ]
+          }
+      }
+    });
+
+    var myChart = new Chart(ctx2, {
+    type: 'pie',
+    data: {
+        datasets: [{
+          data:[null_values_int ,(100-null_values_int)],
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+
+          label: 'Statistics'
+        }],
+        labels:['Null' , 'Not null']
+      },
+      options: {
+      maintainAspectRatio: false,
+        responsive: true,
+        title: {
+          display: true,
+          text: ["Null percentage of table"+" "+"["+mydata[table_name][i]+"]"+" "+"column"+" "+"["+mydata[col_name][i]+"]" ]}
+
+      }
+    });
+
+  }
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<body style="background-color:white;">
+<div class="container-fluid">
+    <div class="sparkline8-list shadow-reset">
+                               <div class="sparkline8-hd">
+                                    <div class="main-sparkline8-hd">
+<h1>Statistics visualization</h1>
+    {%for x in data_length%}
+<div class='row'>
+      <div id="charts" class='col-sm-12' url-endpoint='{% url "statistics_visualization" %}'>
+
+        <div class='col-sm-6' >
+            <br>
+            <canvas id="myChart-{{x}}" width="400" height="400" ></canvas>
+            </div>
+             <div class='col-sm-6'>
+                 <br>
+
+            <canvas id="myChart2-{{x}}" width="400" height="400"></canvas>
+        </div>
+
+
+    </div>
+</div>
+    <br>
+{% endfor %}
+</div>
+</div>
+    </div>
+</div>
+<script src="http://code.jquery.com/jqoery-latest.min.js" type="text/javascript"></script>
+<script src="html2canvas.min.js" type="text/javascript"></script>
+<script>
+    function takescreenshot(){
+     var element =$
+</script>
+</body>
+{% endblock  %}

@@ -1,0 +1,43 @@
+The file will be renamed as follows :
+
+X.Y.Z
+
+where
+X is the number of the category of the check
+Y is the number of the check in the category
+Z is the number of the version of the check
+
+Category Numbers X :
+1. Accuracy & Correctness
+2. Comparability
+3. Completeness
+4. Consistency
+5. uniqueness
+6. Comformaty
+
+So "X" will be given a number from 1 to 6
+
+Check Numbers Y :
+1. Accuracy & Correctness :
+    1. NID Correctness
+    2. phone number Correctness
+    3. gender Correctness
+
+2. Comparability :
+    1. RI
+
+3. Completeness :
+    1. Nulls percentage in a row
+
+4. Consistency :
+    1. Transaction Table uniqueness
+    2. Percentage of correct fks
+
+5. uniqueness :
+    1. lookups uniqueness
+
+6. Comformaty :
+    1. NID formats
+
+
+

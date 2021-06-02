@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<form class="well well-lg" style="width: 100%;"  >
+{%  csrf_token %}
+<div>
+    <H2 style="color:#ff7512;">What is DQ categories & checks?</H2>
+    <br>
+     We have 6 categories to achieve Data Of Quality :
+    <br>
+    <br>
+1. Accuracy & Correctness
+    <br>
+2. Comparability
+    <br>
+3. Completeness
+    <br>
+4. Consistency
+    <br>
+5. uniqueness
+    <br>
+
+6. Comformaty
+<br>
+    <br>
+1. Accuracy & Correctness :
+    <br>
+    <br>
+Check  that data is accurate
+    <br>
+For Example :
+    <br>
+Mobile Number should be of 11 digits
+    <br>
+National ID should be of 14 digits
+<br>
+    <br>
+2. Comparability :
+    <br>
+    <br>
+Checking Refrential Integrity
+    <br>
+For Example :
+    <br>
+checking that the FK in a "MASTER TABLE" really exists in a "LOOKUP TABLE"
+<br>
+    <br>
+3. Completeness :
+    <br>
+    <br>
+Checking nullability across the row
+    <br>
+For Example :
+    <br>
+getting the columns that have nulls for each row
+<br>
+    <br>
+4. Consistency :
+    <br>
+    <br>
+Checking the stability of every transaction table
+    <br>
+For Example :
+    <br>
+all FKs must have a unique PK
+    <br>
+we shouldn't have two transactions having the same key
+<br>
+5. uniqueness :
+    <br>
+    <br>
+Making sure that all PKs are unique
+    <br>
+For Example:
+    <br>
+In Lookup tables we shouldn't have same IDs to different descriptions
+    <br>
+In Master tables we must have a unique Identifier
+<br>
+    <br>
+6. Comformaty :
+    <br>
+    <br>
+Checking the formats of every datatype
+    <br>
+For Example :
+    <br>
+A data is entered in a date format
+    <br>
+phone number having dashes
+
+<br>
+    <br>
+<br>
+    
+ <H2 style="color:#ff7512;">How does a superuser create another users?</H2>
+      <br>
+    Open <a href=http://127.0.0.1:8000/admin/>http://127.0.0.1:8000/admin/ </a> and create users.
+    <br>
+    The superuser can make this user a superuser as well or a user with specific permissions.
+<br>
+  <br>
+<br>
+     <H2 style="color:#ff7512;">What is the format of the csv file that can be read?</H2>
+    <br>
+    Template must be like this one.
+
+
+    <form class="well well-lg" style="width: 100%;"  method="post">
+{%  csrf_token %}
+
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <table id="table" data-toggle="table"   data-key-events="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="DATABASE " >DATABASE NAME</th>
+                                                    <th data-field="TABLE">TABLE NAME</th>
+                                                    <th data-field="COLUMN" >COLUMN NAME</th>
+                                                    <th data-field="DATA_TYPE" >DATA_TYPE</th>
+                                                    <th data-field="NULLABLE" >NULLABLE</th>
+                                                    <th data-field="CONSTRAINT_TYPE"  >CONSTRAINT_TYPE</th>
+                                                    <th data-field="REFERENCE_TABLE_NAME" >REFERENCE_TABLE_NAME</th>
+                                                    <th data-field="REFERENCE_COLUMN_NAME"  >REFERENCE_COLUMN_NAME</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                <td class="database"> </td>
+                                                <td class="tb">  </td>
+                                                <td class="column_name"> </td>
+                                                <td class="column_type">  </td>
+                                                <td class="is_nullable">  </td>
+                                                <td class="CONSTRAINT_TYPE_"></td>
+                                                <td class="REFERENCE_TABLE_NAME"></td>
+                                                <td class="REFERENCE_COLUMN_NAME"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+</form>
+<br>
+    You can export this template as csv and fill it with your data.
+    <br>
+    <br>
+
+
+
+</div>
+
+</form>
+{% endblock %}

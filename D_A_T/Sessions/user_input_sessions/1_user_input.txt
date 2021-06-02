@@ -1,0 +1,4 @@
+db_type : 2
+ip : 172.19.3.22
+username : nooran_helmy
+password : P@ssw0rd

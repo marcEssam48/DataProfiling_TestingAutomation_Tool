@@ -1,0 +1,42 @@
+smx_path="C:\Users\Nooran.helmy\Desktop\Nooran\SMX" 
+home_output_folder="C:\Users\Nooran.helmy\Desktop\Nooran\Tool output"
+ 
+# Source Filter:
+## for all sources: source_names=""
+## for for certain sources: sources: source_names="TAMWEEN,TAX,EDU,CUSTOMS"
+ 
+source_names="GasVIP"
+core_table_name=""
+online_source_t = "stg_online"
+offline_source_t = "stg_layer"
+ 
+etl_process_table = "ETL_PROCESS"
+SOURCE_TABLES_LKP_table = "SOURCE_TABLES_LKP"
+SOURCE_NAME_LKP_table = "SOURCE_NAME_LKP"
+history_tbl = "HISTORY"
+ 
+db_prefix = "GPROD1"
+scripts_flag = "Testing"
+gcfr_ctl_Id =1
+gcfr_stream_key = 1
+gcfr_system_name = "Economic"
+gcfr_stream_name = "Economic stream"
+ 
+ gcfr_bkey_process_type = 21
+gcfr_snapshot_txf_process_type = 24
+gcfr_insert_txf_process_type = 25
+gcfr_others_txf_process_type = 29
+ 
+# values: 1 or 0
+read_sheets_parallel = 1
+Data_mover_flag = 1
+testing_catgs = ['History_Handling']" 
+templates_folder_path="C:\Users\Nooran.helmy\Desktop\tool\HALAZOUNA TOOL\Halazouna 1.2.1-BETA\New_UDI_DataProfiling_Tool-master\D_A_T\TESTING_TEMPS" 
+D215_template_filename = "D215.txt" 
+compareSTGcounts_template_filename = compareSTGcounts.txt
+compareSTGacccounts_template_filename = compareSTGacceptedCounts.txt
+dataValidation_template_filename = dataValidation.txt
+ip =172.19.3.22
+username =nooran_helmy
+password =P@ssw0rd
+scripts_status =automated

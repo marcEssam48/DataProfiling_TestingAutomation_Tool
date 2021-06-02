@@ -1,0 +1,1 @@
+SEL (SUM(CASE WHEN db.table.column IS NOT NULL THEN 1 ELSE 0 END )/COUNT(column)) * 100 || '%' AS " db.table.column "  FROM table; 

@@ -1,0 +1,1 @@
+select (count(*)-count(nullif(trim(column),''))) as "column"  from db.table

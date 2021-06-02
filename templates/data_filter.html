@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+    <script>
+    function toggle_checkboxes(check_all){
+        checkboxes = document.getElementsByName('check');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = check_all.checked;
+          }
+    }
+    function uncheck_checkall(){
+        checkboxes = document.getElementsByName('check');
+        checkall = document.getElementsByName('checkall');
+        for(var i=1, n=checkboxes.length;i<n;i++) {
+            for(var j=0, m=checkall.length;j<m;j++){
+                checkall[j].checked = false;
+            }
+        }
+    }
+
+</script>
+
+<form class="well well-lg" style="width: 100%;"  method="post" >
+{%  csrf_token %}
+    {% if no_filter == "1" %}
+    <h2> No batch ID across all tables to apply as a filter</h2>
+    {% else %}
+ <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+
+                                        <table id="table" data-toggle="table" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="state" data-checkbox=""><input type="checkbox" name="checkall" value ="0" onchange="toggle_checkboxes(this)"/></th>
+                                                    <th data-field="id">Batch ID</th>
+                                                    <th data-field="date" >Data Extraction Date</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for row in result %}
+                                                <tr>
+                                                    <td><input type="checkbox" name="check" value="{{row.0}}" onchange="uncheck_checkall()"/></td>
+                                                    <td> {{ row.0 }} </td>
+                                                    <td> {{ row.1 }} </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+    {% endif %}
+    <br>
+
+<div style="text-align: center">
+     <input type="submit"  value="Statistics" class="btn btn-success" style="background-color: #FF6600" onclick="goto_statistics()">
+     <input type="submit"  value="Data Analysis" class="btn btn-success" style="background-color: #FF6600" onclick="goto_testcases()">
+     <input type="submit" class="btn btn-success" value="Data Quality" style="background-color: #FF6600" onclick="goto_DQ()">
+</div>
+
+<input type="hidden" name="table_values" id="myText">
+<input type="hidden" id="values" value="{{ well_formed_tables }}">
+<input type="hidden" value="{{ table_list }}" name="selected">
+
+</form>
+
+<script>
+function goto_statistics(){
+$('form').attr('action',"{% url 'statistics' %}");
+}
+
+function goto_testcases(){
+$('form').attr('action',"{% url 'test_cases' %}");
+}
+    function goto_DQ(){
+$('form').attr('action',"{% url 'columns_selection' %}");
+}
+</script>
+{% endblock %}
+

@@ -1,0 +1,1 @@
+/Users/markessam/Documents/python_projects/Teradata/DADQ_UDI_INTEGRATION/D_A_T/Sessions/templates_sessions/1_templates.csv

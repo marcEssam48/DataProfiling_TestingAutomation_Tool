@@ -1,0 +1,27 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:eng="http://teradata.com/rta/engagementPlatform">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <eng:serviceInquiryRequest>
+         <eng:G2GHeader>
+            <eng:correlationId>test</eng:correlationId>
+            <eng:originatingChannel>1</eng:originatingChannel>
+            <eng:channelRequestId>2</eng:channelRequestId>
+            <eng:originatingUserType>3</eng:originatingUserType>
+            <eng:originatingUserIdentifier>4</eng:originatingUserIdentifier>
+            <eng:serviceSlug>SUHI-01</eng:serviceSlug>
+         </eng:G2GHeader>
+         <eng:serviceID>UHIEligibility</eng:serviceID>
+         <eng:clientID>UHI</eng:clientID>
+         <eng:parameters>
+            <eng:parameter>
+               <eng:key>NATIONALID</eng:key>
+               <eng:value>NATIONALID_Value</eng:value>
+            </eng:parameter>
+            <eng:parameter>
+               <eng:key>ServiceSlug</eng:key>
+               <eng:value>ServiceSlug_Value</eng:value>
+            </eng:parameter>
+         </eng:parameters>
+      </eng:serviceInquiryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

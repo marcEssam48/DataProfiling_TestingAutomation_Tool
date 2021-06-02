@@ -1,0 +1,27 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:eng="http://teradata.com/rta/engagementPlatform">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <eng:serviceInquiryRequest>
+      <eng:G2GHeader>
+            <eng:correlationId>APIsAutomationTesting</eng:correlationId>
+            <eng:originatingChannel>?</eng:originatingChannel>
+            <eng:channelRequestId>?</eng:channelRequestId>
+            <eng:originatingUserType>?</eng:originatingUserType>
+            <eng:originatingUserIdentifier>?</eng:originatingUserIdentifier>
+            <eng:serviceSlug>ServiceSlug_value</eng:serviceSlug>
+         </eng:G2GHeader>
+         <eng:serviceID>AssetsVNID</eng:serviceID>
+         <eng:clientID>Assets</eng:clientID>
+         <eng:parameters>
+            <eng:parameter>
+               <eng:key>NATIONALID</eng:key>
+               <eng:value>NATIONALID_Value</eng:value>
+            </eng:parameter>
+            <eng:parameter>
+               <eng:key>FullName</eng:key>
+               <eng:value>FullName_Value</eng:value>
+            </eng:parameter>
+         </eng:parameters>
+      </eng:serviceInquiryRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

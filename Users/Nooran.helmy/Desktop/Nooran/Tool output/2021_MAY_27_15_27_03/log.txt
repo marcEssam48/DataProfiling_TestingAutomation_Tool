@@ -1,0 +1,16 @@
+2021-05-27 15:27:03.026917
+Traceback (most recent call last):
+  File "C:\Users\Nooran.helmy\Desktop\tool\LATEST_VERSION 1.0.12-BETA\New_UDI_DataProfiling_Tool-master\D_A_T\generate_scripts.py", line 156, in generate_scripts
+    smx_files = funcs.get_smx_files(self.cf.smx_path, self.smx_ext, self.sheets)
+  File "C:\Users\Nooran.helmy\Desktop\tool\LATEST_VERSION 1.0.12-BETA\New_UDI_DataProfiling_Tool-master\D_A_T\app_Lib\functions.py", line 274, in get_smx_files
+    all_files = md.get_files_in_dir(smx_path, smx_ext)
+  File "C:\Users\Nooran.helmy\Desktop\tool\LATEST_VERSION 1.0.12-BETA\New_UDI_DataProfiling_Tool-master\D_A_T\app_Lib\manage_directories.py", line 48, in get_files_in_dir
+    files = [name for name in os.listdir(path) if "."+ext in name
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'Users/Nooran.helmy/Desktop/Nooran/ACA Production Citizen SMX  - V7.73.xlsx'
+
+##############################################################################
+Reading from: 	Users/Nooran.helmy/Desktop/Nooran/ACA Production Citizen SMX  - V7.73.xlsx
+Output folder: 	Users/Nooran.helmy/Desktop/Nooran/Tool output/2021_MAY_27_15_27_03
+SMX files:
+0 script generated for 0 source from 0 smx file
+Elapsed Time: 0:00:00

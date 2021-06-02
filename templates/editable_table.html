@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+<header xmlns="">
+    <style>
+        textarea:focus, input:focus{
+    outline: none;
+}
+    </style>
+</header>
+{%  block content %}
+<form class="well well-lg" style="width: 100%;"  method="post">
+{%  csrf_token %}
+ <div class="sparkline8-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+
+                                        <table id="table" data-toggle="table"  data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="DATABASE" >DATABASE</th>
+                                                    <th data-field="TABLE">TABLE</th>
+                                                    <th data-field="COLUMN" >COLUMN</th>
+                                                    <th data-field="DATA_TYPE" >DATA_TYPE</th>
+                                                    <th data-field="NULLABLE" >NULLABLE</th>
+                                                    <th data-field="CONSTRAINT_TYPE"  >CONSTRAINT_TYPE</th>
+                                                    <th data-field="REFERENCE_TABLE_NAME" >REFERENCE_TABLE_NAME</th>
+                                                    <th data-field="REFERENCE_COLUMN_NAME"  >REFERENCE_COLUMN_NAME</th>
+{#                                                    <th data-field="DATAWAREHOUSE_TYPE" >DATAWAREHOUSE_TYPE</th>#}
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+
+                                            {% for row in  data%}
+
+
+
+                                                <tr>
+
+
+
+                                                <td class="database">{{ row.0 }}   </td>
+                                                <td class="tb">{{ row.1 }}   </td>
+                                                <td class="column_name">{{ row.2 }}   </td>
+                                                <td class="column_type">{{ row.3 }}   </td>
+                                                <td class="is_nullable">{{ row.4 }}   </td>
+                                                <td class="CONSTRAINT_TYPE_">
+                                                    <select class="form-control" id="constraints[]" name="cons" onchange="enable();">
+                                                    <option value="{{row.5}}">{{row.5}}</option>
+                                                    {% for item in constraints %}
+                                                    {% if row.5 != item%}
+                                                    <option value="{{ item }}">{{ item }}</option>
+
+                                                    {% endif %}
+                                                    {% endfor%}
+                                                </select>
+
+                                                </td>
+                                                <input type="hidden" id ="table_py" value="hello">
+
+                                                <td class="REFERENCE_TABLE_NAME">
+                                                <select class="form-control" id="ref_table_ddl{{ forloop.counter0 }}"   onchange="enable_cols();"  disabled>
+                                                    {% if row.6 != "empty" %}
+                                                    <option value="{{row.6}}">{{row.6}}</option>
+                                                        {% else %}
+                                                        <option value=" "> </option>
+                                                {% endif %}
+                                                    {% for item in well_formed_tables %}
+                                                    {% if row.6 != item and row.1 != item %}
+                                                    <option value="{{ item }}">{{ item }}</option>
+
+
+                                                    {% endif %}
+                                                    {% endfor%}
+                                                </select>
+                                                </td>
+                                                <td class="REFERENCE_COLUMN_NAME">
+                                                <select class="form-control" id="ref_col_ddl{{ forloop.counter0 }}" disabled>
+                                                    <option value="{{row.6}}">{{row.7}}</option>
+{#                                                    {% for item in cols %}#}
+{#                                                    {% if row.7 != item%}#}
+{#                                                    <option value="{{ item }}">{{ item }}</option>#}
+{##}
+{#                                                    {% endif %}#}
+{#                                                    {% endfor%}#}
+                                                </select>
+                                                </td>
+{#                                                <td class="DATAWAREHOUSE_TYPE" >#}
+{#                                                    <select class="form-control" id="dwh[]" >#}
+{#                                                    <option value="{{row.8}}">{{row.8}}</option>#}
+{##}
+{#                                                </select>#}
+{#                                                </td>#}
+
+
+                                                </tr>
+
+                                            {% endfor %}
+
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+    <br>
+    <div class="form-group row" style="text-align: center;margin-bottom: 3%" >
+        <input type="submit"  value="Save" class="btn btn-success" style="background-color: #FF6600" onclick="goto_save()">
+{#     <input type="submit"  value="Statistics" class="btn btn-success" style="background-color: #FF6600" onclick="goto_statistics()">#}
+{#     <input type="submit"  value="Test Cases" class="btn btn-success" style="background-color: #FF6600" onclick="goto_testcases()">#}
+ </div>
+
+                                    </div>
+
+
+
+<input type="hidden" name="table_values" id="myText">
+<input type="hidden" id="values" value="{{ well_formed_tables }}">
+<input type="hidden" value="{{ sel_tables }}" name="selected">
+</form>
+
+
+<script>
+
+function retrieve_values() {
+
+    db = document.getElementsByClassName("database");
+    tb = document.getElementsByClassName("tb");
+    column_name = document.getElementsByClassName("column_name");
+    column_type = document.getElementsByClassName("column_type");
+    is_nullable = document.getElementsByClassName("is_nullable");
+
+    CONSTRAINT_TYPE = $("select[id='constraints[]']")
+              .map(function(){return $(this).val();}).get();
+
+    REFERENCE_TABLE_NAME = $("select[id='ref_table_ddl[]']")
+              .map(function(){return $(this).val();}).get();
+
+    REFERENCE_COLUMN_NAME = $("select[id='ref_col_ddl[]']")
+              .map(function(){return $(this).val();}).get();
+    {##}
+    {#DATAWAREHOUSE_TYPE = $("select[id='dwh[]']")#}
+    {#          .map(function(){return $(this).val();}).get();#}
+    var rows = [["DATABASE","TABLE", 'COLUMN', "DATA_TYPE", "NULLABLE", "CONSTRAINT_TYPE", "REFERENCE_TABLE_NAME", "REFERENCE_COLUMN_NAME"]];
+
+    for(var i =0;i<db.length;i++){
+        var temp = [];
+        temp.push(db[i].innerHTML);
+        temp.push(tb[i].innerHTML);
+        temp.push(column_name[i].innerHTML);
+        temp.push(column_type[i].innerHTML);
+        temp.push(is_nullable[i].innerHTML);
+        temp.push(CONSTRAINT_TYPE[i]);
+        temp.push(document.getElementById("ref_table_ddl"+i+"").value);
+        temp.push(document.getElementById("ref_col_ddl"+i+"").value);
+        {#temp.push(DATAWAREHOUSE_TYPE[i]);#}
+        rows.push(temp);
+
+
+    }
+
+    var file_name = db[0].innerHTML;
+    document.getElementById("myText").value = rows;
+
+}
+function goto_save() {
+retrieve_values();
+$('form').attr('action',"{% url 'saved_template' %}");
+
+}
+
+function goto_statistics(){
+retrieve_values();
+$('form').attr('action',"{% url 'statistics' %}");
+}
+
+function goto_testcases(){
+retrieve_values();
+$('form').attr('action',"{% url 'test_cases' %}");
+}
+
+function enable() {
+    CONSTRAINT_TYPE = $("select[id='constraints[]']").map(function(){return $(this).val();}).get();
+
+    {#ref_table =       $("select[id='ref_table_ddl[]']").map(function() {return $(this).val();}).get();#}
+
+
+
+
+    for(var j=0;j<CONSTRAINT_TYPE.length;j++)
+    {
+        if(CONSTRAINT_TYPE[j] == "FK")
+        {
+
+        ref_table = document.getElementById("ref_table_ddl"+j+"").disabled = false;
+
+
+
+        }
+        else{
+            ref_table = document.getElementById("ref_table_ddl"+j+"").disabled = true;
+            ref_col = document.getElementById("ref_col_ddl"+j+"").disabled = true;
+             document.getElementById("ref_table_ddl"+j+"").value = "NONE";
+             document.getElementById("ref_col_ddl"+j+"").value = "NONE";
+        }
+
+
+    }
+
+
+}
+
+function enable_cols() {
+
+    CONSTRAINT_TYPE = $("select[id='constraints[]']").map(function(){return $(this).val();}).get();
+    for(var zx = 0; zx<CONSTRAINT_TYPE.length;zx++) {
+        var select = document.getElementById("ref_col_ddl" + zx + "");
+        var length = select.options.length;
+        for (i = length - 1; i >= 0; i--) {
+            select.options[i] = null;
+        }
+    }
+
+
+
+    data = document.getElementById("values").value;
+
+    new_data = '';
+
+
+    for(var ch =0;ch<data.length;ch++)
+    {
+
+
+        if(data[ch] == "\'")
+        {
+
+            new_data +="\"";
+
+
+        }
+        else {
+            new_data += data[ch]
+        }
+
+    }
+    mydata = JSON.parse(new_data);
+
+
+
+      var keys = [];
+   for(var k in mydata) {
+   keys.push(k);
+   {#alert(k);#}
+   }
+
+
+
+
+
+    for(var z=0;z<CONSTRAINT_TYPE.length;z++)
+    {
+
+
+
+counter =0;
+         for (table_name in keys) {
+             REFERENCE_TABLE_NAME = document.getElementById("ref_table_ddl"+z+"").value;
+
+
+
+
+             if (REFERENCE_TABLE_NAME == keys[table_name]) {
+
+
+                 table_value = keys[table_name];
+                 for (var col in mydata[table_value]) {
+
+                     var sel = document.getElementById("ref_col_ddl" + z + "");
+                     var opt = document.createElement('option');
+                     opt.appendChild(document.createTextNode(mydata[table_value][col]));
+                     opt.value = mydata[table_value][col];
+                     sel.appendChild(opt);
+                     ref_table = document.getElementById("ref_col_ddl" + z + "").disabled = false;
+
+                 }
+             }
+
+         }
+
+
+    }
+
+
+}
+
+</script>
+
+    <script type="text/javascript" src="table_dict.json"></script>
+{% endblock %}
+
+
+

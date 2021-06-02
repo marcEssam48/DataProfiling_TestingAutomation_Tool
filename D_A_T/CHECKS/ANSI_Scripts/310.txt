@@ -1,0 +1,1 @@
+select concat(100*(count(*)-count(nullif(trim(column),'')))/count(*),'%' ) as "column" from db.table

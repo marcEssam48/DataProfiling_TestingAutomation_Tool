@@ -1,0 +1,264 @@
+<!--<html>
+<head>
+    <title> Login </title>
+    <link rel="stylesheet" type="text/css" href="css/style1.css">
+</head>
+<header>
+    <figure class="logo"><img src="img/t.png" alt="library" height="80" width="180"></figure>
+</header>
+    <body>
+
+        <div class="login-box">
+
+            <h1>Login</h1>
+            <form action="Controller" method="POST">
+                <label>Ninput type="text" name="name" placeholder="Enter Your Name" required>ame</label>
+                <input type="text" name="name" placeholder="Enter Your Name" required>
+                <label>National ID/Passport</label>
+                <input type="text" name="nationalID" placeholder="Enter Your National ID" required>
+
+                <button class="btn btn-default" type="submit" name="login" value="sign in"> Sign in </button>
+            </form>
+        </div>
+
+    </body>
+</html>-->
+
+{% load static %}
+
+    <link rel="shortcut icon" type="image/x-icon" href="../static/img/sidebar_TD.jpg">
+    <!-- Google Fonts
+		============================================ -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i,800" rel="stylesheet">
+    <!-- Bootstrap CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Bootstrap CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <!-- adminpro icon CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/adminpro-custon-icon.css">
+    <!-- meanmenu icon CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/meanmenu.min.css">
+    <!-- mCustomScrollbar CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/jquery.mCustomScrollbar.min.css">
+    <!-- animate CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <!-- data-table CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/data-table/bootstrap-table.css">
+    <link rel="stylesheet" href="../static/css/data-table/bootstrap-editable.css">
+    <!-- normalize CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <!-- charts C3 CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/c3.min.css">
+    <!-- forms CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/form/all-type-forms.css">
+    <!-- style CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <!-- responsive CSS
+		============================================ -->
+    <link rel="stylesheet" href="../static/css/responsive.css">
+    <!-- modernizr JS
+		============================================ -->
+    <script src="../static/js/vendor/modernizr-2.8.3.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Page</title>
+   <!--Made with love by Mutiullah Samim -->
+
+	<!--Bootsrap 4 CDN-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--Fontawesome CDN-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+	<!--Custom styles-->
+	<link rel="stylesheet" type="text/css" href="styles.css">
+        <style>
+            /* Made with love by Mutiullah Samim*/
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,body{
+/*background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');*/
+background-image:  linear-gradient(#fff,#ddd6f3,#394951);
+background-size: cover;
+background-repeat: no-repeat;
+height: 100%;
+width: 100%;
+font-family: 'Numans', sans-serif;
+background-size: cover;
+background-position: center;
+
+
+}
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+.card{
+height: 300px;
+margin-top: auto;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.5) !important;
+  olor: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    width: 30%;
+    height: 50%;
+    padding: 50px 30px;
+    border-radius: 15px 50px 30px;   background: rgba(0, 0, 0, 0.5);
+    opacity: 0.8;
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    width: 30%;
+    height: 50%;
+    padding: 50px 30px;
+    border-radius: 15px 50px 30px;
+}
+
+.social_icon span{
+font-size: 60px;
+margin-left: 10px;
+color:#ff7512;
+}
+
+.social_icon span:hover{
+color: white;
+cursor: pointer;
+}
+
+.card-header h3{
+color: white;
+}
+
+.social_icon{
+position: absolute;
+right: 20px;
+top: -45px;
+}
+
+.input-group-prepend span{
+width: 50px;
+background-color: #ff7512;
+color: black;
+border:0 !important;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember{
+color: white;
+}
+
+.remember input
+{
+width: 20px;
+height: 20px;
+margin-left: 15px;
+margin-right: 5px;
+}
+
+.login_btn{
+color: black;
+background-color:#ff7512;
+width: 100px;
+}
+
+.login_btn:hover{
+color: black;
+background-color: white;
+}
+
+.links{
+color: white;
+}
+
+.links a{
+margin-left: 4px;
+}
+
+        </style>
+</head>
+<header>
+    <figure class="logo"><img src="{% static 'img/t.png' %}" alt="library" height="200" width="300"></figure>
+</header>
+<body>
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card" style="height:300 "  >
+			<div class="card-header">
+				<h3>Sign In</h3>
+
+				<div class="d-flex justify-content-end social_icon">
+
+
+				</div>
+			</div>
+
+			<div class="card-body">
+
+				<form action="{% url 'dashboard' %}" method="POST">
+                    {% csrf_token %}
+					<div>
+
+<!--					<div class="input-group form-group">-->
+<!--						<div class="input-group-prepend">-->
+<!--							<span class="input-group-text"><i class="fa fa-user"></i></span>-->
+							<label style="font-size:larger">Username :</label>
+
+<!--						</div>-->
+
+
+						<input style="color:black;" type="text" name="name" placeholder="Enter Your Name" required class="form-control">
+<br>
+<!--					</div>-->
+<!--					<div class="input-group form-group">-->
+<!--						<div class="input-group-prepend">-->
+<!--							<span class="input-group-text"><i class="fa fa-key"></i></span>-->
+							<label style="font-size:larger">Password :</label>
+<!--						</div>-->
+						<input style="color:black;" type="password" name="password" placeholder="Enter Your password" required class="form-control" >
+<!--					</div>-->
+                                    <br>
+					<div class="form-group" style="text-align: center">
+						<input type="submit" value="Login" class="btn float-right login_btn" name="login" style="font-size:larger">
+					</div>
+</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+select concat((sum(
+CASE when
+length(db.table.column) = 14
+then 1
+else 0 END
+    ) /count(db.table.column) * 100 ),"%") as " db.table.column "
+from db.table

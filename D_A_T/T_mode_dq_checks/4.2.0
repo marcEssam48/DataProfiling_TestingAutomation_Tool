@@ -1,0 +1,9 @@
+select 
+concat(
+(sum
+( case when table1.fk
+in (select table2.pk from table2)
+then 1 
+else 0 END )
+/ count(table1.fk ))*100,"%") as " db.table.column "
+ from db.table1

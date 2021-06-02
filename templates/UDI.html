@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" action="{{ 'UDI_TRIGGER' }}">
+
+{% csrf_token %}
+<div class="form-control" style="height: 100%">
+    <label style="color: #ff6600">Please Edit your Config file :</label>
+<textarea style="height: 80%;width:100%;" rows="35" name="config_file">
+{{ file }}
+</textarea>
+    <div style="text-align: center;margin-top:2% ">
+   <label class="checkbox-inline">
+      <input type="checkbox" value="1" name="testing">Testing
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" value="1" name="UDI">UDI
+    </label>
+        </div>
+
+    <div style="text-align: center;margin-top: 2%">
+<input type="submit" value="Start" class="btn btn-success" style="background-color: #ff6600">
+    </div>
+    </div>
+</form>
+
+{% endblock %}

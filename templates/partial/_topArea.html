@@ -1,0 +1,133 @@
+
+           <style>
+               /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+           </style>
+            <div class="header-top-area" style="background-color: #37424A">
+                <div class="fixed-header-top" style="background-color: #37424A">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12">
+                                <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn" style="background-color: #37424A">
+                                    <i class="fa fa-bars"></i>
+                                </button>
+                                <div class="admin-logo logo-wrap-pro">
+                                    <a href="#"><img src="../static/img/logo/log.png" alt="" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-1 col-sm-1 col-xs-12">
+                                <div class="header-top-menu tabl-d-n">
+                                    <ul class="nav navbar-nav mai-top-nav">
+                                        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a>
+                                        </li>
+                                        <li class="nav-item"><a href="https://www.teradata.co.uk/" class="nav-link">About</a>
+                                        </li>
+                                         <li class="nav-item"><a href="{% url 'check_doc' %}" class="nav-link">Help</a>
+<!--                                         <div class="sub-menu-1">-->
+<!--                                            <ul>&ndash;&gt;-->
+<!--                                               <li><a href="{% url 'check_doc' %}">Checks documentation</a></li>-->
+<!--                                    <i class="fa fa-caret-down"></i>-->
+<!--                                            </ul>-->
+<!--                                         </div>-->
+                                        </li>
+
+                                        <li class="nav-item"><a href="{% url 'support' %}"  class="nav-link">Support</a>
+                                        </li>
+                                         <li class="nav-item" style="position:fixed;right:10px;top:5px;"><a href="{% url 'logout' %}"  role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-sign-out"></i> <span class="mini-dn">Sign out</span> <span class="indicator-right-menu mini-dn"></span></a>
+
+                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+ <div id="myModal" class="modal" style="height: 100%;width:20%;margin-left: 25%;overflow-x:hidden;">
+    <div class="sparkline8-hd" style="left:20%;" >
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+        <form  method="POST" action="{% url 'save_note' %}">
+     {% csrf_token %}
+
+        <h3 style="text-align: center">Add Your Notes</h3>
+         <textarea required  rows="4" name="note_in" id="note_in"   style="resize: none;"></textarea>
+
+    <button  type="submit" name="saving_note" class="button" style= "background-color:#0b991b; margin-right: 50%; margin-left: 35%" value="Save">Save</button>
+
+    </form>
+       </div>
+    </div>
+  </div>
+
+
+
+           <script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+

@@ -1,0 +1,1 @@
+{"tables": ["SAGL_NAFSAK_8APR2021"], "columns": ["NID"], "categories": ["Accuracy & Correctness"], "results": [96.0]}

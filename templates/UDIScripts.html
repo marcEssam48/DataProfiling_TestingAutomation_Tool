@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" action="{{ 'UDI_Scripts_Renderer' }}">
+
+{% csrf_token %}
+<div class="form-control" style="height: 100%">
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">Enter output path of the generated scripts</label>
+    <input type="text" class="form-control" name="output_path" style="margin-left: 2%;width:90%" required value="/Users/markessam/Documents/UDI">
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">Enter SMX PATH</label>
+    <input type="text" class="form-control" name="smx_path" style="margin-left: 2%;width:90%" required value="/Users/markessam/Documents/UDI">
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%;" >Enter template path</label>
+    <input type="text" class="form-control" name="templates_path" style="margin-left: 2%;width:90%;" required value="/Users/markessam/Documents/Halazouna 1.2.2-BETA/New_UDI_DataProfiling_Tool-master/D_A_T/TESTING_TEMPS">
+
+
+    <div id="source">
+        <label style="color: #ff6600;margin-left: 2%;margin-top: 2%;">Enter Source Name</label>
+        <input type="text" class="form-control" id="source_name" name="source_name" style="margin-left: 2%;width:90%">
+    </div>
+
+    <div id="core_table" style="display:none;">
+        <label style="color: #ff6600;margin-left: 2%;margin-top: 2%;">Enter Core Table Name</label>
+        <input type="text" class="form-control" id = "core_table_name" name="core_table_name" style="margin-left: 2%;width:90%" >
+    </div>
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">online_source_t</label>
+    <input type="text" class="form-control" name="online_source_t" style="margin-left: 2%;width:90%"  value="stg_online" readonly>
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">offline_source_t</label>
+    <input type="text" class="form-control" name="offline_source_t" style="margin-left: 2%;width:90%"  value="stg_layer" readonly>
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">db_prefix</label>
+    <input type="text" class="form-control" name="db_prefix" style="margin-left: 2%;width:90%"  value="GPROD1" >
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">scripts_flag</label>
+    <select  class="form-control" name="scripts_flag" style="margin-left: 2%;width:90%" id="constraints" >
+<!--        <option value="All">ALL</option>-->
+        <option value="UDI">UDI</option>
+<!--        <option value="Testing">Testing</option>-->
+    </select>
+<br>
+
+    <br>
+
+
+
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">gcfr_ctl_Id</label>
+    <input type="text" class="form-control" name="gcfr_ctl_Id" style="margin-left: 2%;width:90%"  value="1" >
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">gcfr_stream_key</label>
+    <input type="text" class="form-control" name="gcfr_stream_key" style="margin-left: 2%;width:90%"  value="1" >
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">gcfr_system_name</label>
+    <input type="text" class="form-control" name="gcfr_system_name" style="margin-left: 2%;width:90%"  value="Economic" >
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">gcfr_stream_name</label>
+    <input type="text" class="form-control" name="gcfr_stream_name" style="margin-left: 2%;width:90%"  value="Economic stream" >
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">etl_process_table</label>
+    <input type="text" class="form-control" name="etl_process_table" style="margin-left: 2%;width:90%"  value="ETL_PROCESS" readonly>
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">SOURCE_TABLES_LKP_table</label>
+    <input type="text" class="form-control" name="SOURCE_TABLES_LKP_table" style="margin-left: 2%;width:90%"  value="SOURCE_TABLES_LKP" readonly>
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">SOURCE_NAME_LKP_table</label>
+    <input type="text" class="form-control" name="SOURCE_NAME_LKP_table" style="margin-left: 2%;width:90%"  value="SOURCE_NAME_LKP" readonly>
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">history_tbl</label>
+    <input type="text" class="form-control" name="history_tbl" style="margin-left: 2%;width:90%"  value="HISTORY" readonly>
+
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">gcfr_bkey_process_type</label>
+    <input type="text" class="form-control" name="gcfr_bkey_process_type" style="margin-left: 2%;width:90%"  value="21" readonly>
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">gcfr_snapshot_txf_process_type</label>
+    <input type="text" class="form-control" name="gcfr_snapshot_txf_process_type" style="margin-left: 2%;width:90%"  value="24" readonly>
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">gcfr_insert_txf_process_type</label>
+    <input type="text" class="form-control" name="gcfr_insert_txf_process_type" style="margin-left: 2%;width:90%"  value="25" readonly>
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">gcfr_others_txf_process_type</label>
+    <input type="text" class="form-control" name="gcfr_others_txf_process_type" style="margin-left: 2%;width:90%"  value="29" readonly>
+
+
+    <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">read_sheets_parallel</label>
+    <select class="form-control" name="read_sheets_parallel" style="margin-left: 2%;width:90%">
+        <option value="1"> 1 </option>
+        <option value="0"> 0 </option>
+    </select>
+
+     <label style="color: #ff6600;margin-left: 2%;margin-top: 2%">Data_mover_flag</label>
+    <select class="form-control" name="Data_mover_flag" style="margin-left: 2%;width:90%">
+        <option value="1"> 1 </option>
+        <option value="0"> 0 </option>
+    </select>
+
+
+
+
+
+
+
+
+{#    <div style="text-align: center;margin-top:2% ">#}
+{##}
+{##}
+{#   <label class="checkbox-inline">#}
+{#      <input type="checkbox" value="1" name="testing">Testing#}
+{#    </label>#}
+{#    <label class="checkbox-inline">#}
+{#      <input type="checkbox" value="1" name="UDI">UDI#}
+{#    </label>#}
+{#        </div>#}
+
+    <div style="text-align: center;margin-top: 2%">
+<input type="submit" value="Start" class="btn btn-success" style="background-color: #ff6600">
+    </div>
+    </div>
+</form>
+
+<script>
+function enable()
+{
+    flag = document.getElementById("constraints").value;
+    if(flag == "Testing")
+    {
+        document.getElementById("test_categories").style.display = "block";
+        document.getElementById("scripts_status").style.display = "block";
+
+    }
+    else{
+        document.getElementById("test_categories").style.display = "none";
+        document.getElementById("scripts_status").style.display = "none";
+    }
+
+}
+
+function change_model_testing()
+{
+    flag = document.getElementById("model_testing").value;
+    if(flag == "is_source")
+    {
+        document.getElementById("source").style.display = "block";
+        document.getElementById("source_name").required = true;
+        document.getElementById("source_name").value = "";
+         document.getElementById("stg_count").disabled = false;
+
+        document.getElementById("core_table").style.display = "none";
+         document.getElementById("core_table_name").required = false;
+         document.getElementById("core_table_name").value = "Null";
+    }
+    else{
+        document.getElementById("source").style.display = "none";
+        document.getElementById("source_name").required = false;
+        document.getElementById("source_name").value = "Null";
+        document.getElementById("stg_count").disabled = true;
+
+        document.getElementById("core_table").style.display = "block";
+        document.getElementById("core_table_name").required = true;
+        document.getElementById("core_table_name").value = "";
+    }
+}
+
+
+    $(document).ready(function (){
+        $("#constraints").on("change",function (){
+            if(this.value === "Testing")
+            {
+                $("#test_categories").show();
+                $("#scripts_status").show();
+            }
+            else{
+                 $("#test_categories").hide();
+                }
+        });
+    });
+function toggle_checkboxes(check_all){
+        checkboxes = document.getElementsByName('catgs');
+        flag = document.getElementById("model_testing").value;
+
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+
+          checkboxes[i].checked = check_all.checked;
+          if(flag == "is_core_table")
+         {
+                document.getElementById("stg_count").checked = false;
+         }
+
+          }
+    }
+    function uncheck_checkall(){
+        checkboxes = document.getElementsByName('catgs');
+
+        checkall = document.getElementsByName('checkall');
+        for(var i=1, n=checkboxes.length;i<n;i++) {
+            for(var j=0, m=checkall.length;j<m;j++){
+                checkall[j].checked = false;
+            }
+        }
+    }
+
+</script>
+{% endblock %}

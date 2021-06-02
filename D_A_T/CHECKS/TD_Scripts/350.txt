@@ -1,0 +1,5 @@
+SELECT top 1 CASE WHEN (nullif(trim(db.table.column),'') is null) THEN 'false'
+ELSE 'true'
+END AS column
+from db.table
+order by column
