@@ -712,10 +712,16 @@ def db_checks(request):
     last_modified_batches_list = []
     batched_scripts = []
 
-    try:
-        batched_scripts = batcher.batching(scripts,new_batch,request)
-    except :
+    if str(new_batch) == "['']":
         batched_scripts = scripts
+    else:
+        batched_scripts = batcher.batching(scripts, new_batch, request)
+
+
+    # try:
+    #     batched_scripts = batcher.batching(scripts,new_batch,request)
+    # except :
+    #     batched_scripts = scripts
     # return HttpResponse(batched_scripts)
     for sc in batched_scripts:
         if "join" in sc.lower():
