@@ -40,7 +40,7 @@ import threading
 import D_A_T.UDI.read_smx_sheet.UDi_funcs as udi_retrieve
 import D_A_T.UDI.read_smx_sheet.UDI_class as udi_class
 import D_A_T.UDI.read_smx_sheet.generate_scripts as gs
-
+import D_A_T.Parameters as pms
 
 dbHost = settings.DATABASES['default']['HOST']
 dbUsername = settings.DATABASES['default']['USER']
@@ -1338,6 +1338,7 @@ def statistics_table(request):
     return render(request, 'statistics_table.html', context)
 
 def save_template(request):
+    DataTypeDict = pms.DataTypes
     table_list = request.POST.getlist('tables')
 
     try:
@@ -1401,12 +1402,13 @@ def save_template(request):
             if db_type == "2":
                with teradatasql.connect(host=ip, user=username, password=password, encryptdata=True) as connect:
                     for table_ in table_list:
-                        query = "SELECT TableName,ColumnName,Nullable FROM dbc.COLUMNS WHERE DatabaseName = '" + db_selected.strip() + "' AND TableName ='" + table_.strip() + "';"
+                        query = "SELECT TableName,ColumnName,Nullable,ColumnType,ColumnLength FROM dbc.COLUMNS WHERE DatabaseName = '" + db_selected.strip() + "' AND TableName ='" + table_.strip() + "';"
                         df = pd.read_sql(query, connect)
+                        print(df)
                         for i in range(0, len(df)):
-                            query_type = "SELECT TOP 1 TYPE(" + str(df.loc[i, 'ColumnName']).strip() + ") as type_" + " FROM " + db_selected.strip() + "." + table_.strip() + ";"
-                            result = pd.read_sql(query_type, connect)
-                            filewriter.writerow((str(db_selected).strip(), str(df.loc[i, 'TableName']).strip(), str(df.loc[i, 'ColumnName']).strip(),str(result.loc[0, 'type_']).strip().replace(",","*/"), df.loc[i, 'Nullable'], " ", " ", " "))
+                            # query_type = "SELECT TOP 1 TYPE(" + str(df.loc[i, 'ColumnName']).strip() + ") as type_" + " FROM " + db_selected.strip() + "." + table_.strip() + ";"
+                            # result = pd.read_sql(query_type, connect)
+                            filewriter.writerow((str(db_selected).strip(), str(df.loc[i, 'TableName']).strip(), str(df.loc[i, 'ColumnName']).strip(),DataTypeDict[str(df.loc[i, 'ColumnType']).strip()].replace(",","*/")+"("+str(df.loc[i,"ColumnLength"])+")", df.loc[i, 'Nullable'], " ", " ", " "))
 
             elif db_type == "1":
                 connect =db.myssql_connection(ip,username,password)
